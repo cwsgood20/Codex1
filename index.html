@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI DLP Platform - Product Policy Console</title>
+  <title>AI-R Security Platform</title>
   <style>
     :root{
       --ink:#111827;
@@ -21,6 +21,8 @@
       --purple:#6b61d8;
       --purple-soft:#f0efff;
       --orange:#d68422;
+      --yellow:#d6a322;
+      --yellow-soft:#fff6db;
       --orange-soft:#fff2df;
       --red:#d14a55;
       --red-soft:#fff0f2;
@@ -33,7 +35,7 @@
     .app{min-height:100vh;background:#fff}
     .topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;height:52px;padding:0 14px;background:#fff;border-bottom:1px solid var(--line)}
     .hamburger{display:grid;width:28px;height:28px;place-items:center;border:0;background:transparent;color:#111827;font-size:20px}
-    .brand{display:flex;align-items:center;gap:8px;min-width:178px}
+    .brand{display:flex;align-items:center;gap:8px;min-width:260px}
     .brand-mark{display:grid;width:24px;height:24px;place-items:center;border-radius:5px;color:#fff;background:#4c75ff;font-size:13px;font-weight:900}
     .brand strong{font-size:17px;font-weight:500;color:#5b6470}
     .brand small{margin-left:1px;color:#6b7280;font-size:10px;font-weight:900}
@@ -56,10 +58,10 @@
     .product-btn{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:62px;padding:9px 10px;border:1px solid transparent;border-radius:8px;background:transparent;color:#4b5563;text-align:left}
     .product-btn:hover{background:#fff;border-color:#dfe6ed}
     .product-btn.active{background:#fff;border-color:var(--product);box-shadow:inset 4px 0 0 var(--product)}
-    .product-btn[data-product="pc"]{--product:var(--green)}
-    .product-btn[data-product="llm"]{--product:var(--blue)}
-    .product-btn[data-product="rbi"]{--product:var(--purple)}
-    .product-btn[data-product="ndr"]{--product:var(--teal)}
+    .product-btn[data-product="pc"]{--product:var(--yellow)}
+    .product-btn[data-product="llm"]{--product:var(--red)}
+    .product-btn[data-product="rbi"]{--product:var(--blue)}
+    .product-btn[data-product="ndr"]{--product:var(--yellow)}
     .product-icon{display:grid;width:30px;height:30px;place-items:center;border-radius:8px;color:#fff;background:var(--product);font-size:11px;font-weight:900}
     .product-text strong{display:block;font-size:12px;color:#27313f}
     .product-text span{display:block;margin-top:4px;color:#87919e;font-size:10px;line-height:1.3}
@@ -227,27 +229,24 @@
   <div class="app">
     <header class="topbar">
       <button class="hamburger" title="메뉴">☰</button>
-      <div class="brand"><span class="brand-mark">AI</span><strong>AI-R</strong><small>DLP</small></div>
+      <div class="brand"><span class="brand-mark">AI</span><strong>AI-R Security Platform</strong></div>
       <div class="top-status"><span title="언어">◎</span><span class="user-chip">리자</span></div>
     </header>
 
     <div class="body">
       <aside class="sidebar">
         <div class="nav-group">
-          <button class="nav-item"><span class="nav-icon">⌂</span><span>홈</span></button>
-          <button class="nav-item active"><span class="nav-icon">▤</span><span>전사 규정</span></button>
-          <button class="nav-item"><span class="nav-icon">▣</span><span>전사 정책관리</span></button>
-          <button class="nav-item"><span class="nav-icon">▥</span><span>로그</span><span class="nav-chevron">⌄</span></button>
-          <div class="sub-nav"><button>전체</button><button>이상 행위</button></div>
-          <button class="nav-item"><span class="nav-icon">⚙</span><span>설정</span></button>
+          <button class="nav-item active" data-global="home"><span class="nav-icon">⌂</span><span>홈</span></button>
+          <button class="nav-item" data-global="common-policy"><span class="nav-icon">▣</span><span>공통정책</span></button>
+          <button class="nav-item" data-global="security-log"><span class="nav-icon">▥</span><span>AI 보안로그</span></button>
         </div>
 
         <div class="nav-title">제품별 정책관리</div>
         <div class="product-menu" aria-label="제품별 정책관리">
-          <div class="product-section open" data-section="rbi">
-            <button class="product-btn active" data-product="rbi"><span class="product-icon">RBI</span><span class="product-text"><strong>AI-R RBI</strong><span>원격 격리</span></span><span class="product-count">6</span></button>
+          <div class="product-section" data-section="rbi">
+            <button class="product-btn" data-product="rbi"><span class="product-icon">RBI</span><span class="product-text"><strong>AI-R RBI</strong><span>원격 격리</span></span><span class="product-count">6</span></button>
             <div class="product-submenu">
-              <button class="product-sub active" data-product="rbi" data-view="rules">규정</button>
+              <button class="product-sub" data-product="rbi" data-view="rules">규정</button>
               <button class="product-sub" data-product="rbi" data-view="policies">정책 관리</button>
             </div>
           </div>
@@ -392,7 +391,54 @@
         ]
       }
     };
-    const llmScreens={
+    const globalScreens={
+      home:{
+        label:"전체 대시보드",
+        title:"전체 대시보드",
+        crumb:"홈 / 전체 대시보드",
+        desc:"전사 AI 사용현황, 보안현황, API 사용량, 비용, 이상행위를 한눈에 확인합니다.",
+        metricLabels:["AI 사용현황","보안현황","API 사용량","비용"],
+        metrics:["8,906","오늘 AI 세션","37","보안 이벤트","1.28M","오늘 API 호출","$31.4K","이번 달 비용"],
+        countLabel:"이상행위",
+        columns:["구분","대상","지표","상태","관리 조치"],
+        rows:[
+          ["AI 사용현황","ChatGPT / Gemini / Claude","활성 사용자 1,284명","정상","사용 추이 확인"],
+          ["보안현황","민감정보 탐지","37건 탐지, 11건 차단","주의","정책 강화 검토"],
+          ["API 사용량","LLM Proxy","1.28M calls / 39.6M tokens","정상","한도 모니터링"],
+          ["비용","R&D / Sales","$31.4K / 예산 76%","주의","예산 재배분"],
+          ["이상행위","미승인 모델 호출","6건","조사 중","담당자 통보"]
+        ]
+      },
+      "common-policy":{
+        label:"공통정책",
+        title:"공통정책",
+        crumb:"공통정책 / 전사 공통",
+        desc:"제품별 정책에 공통 적용되는 민감정보, 감사, 예외 승인 기준을 관리합니다.",
+        metrics:["14","공통 정책","5","검토 필요","3","예외 승인 대기","09:30","마지막 배포"],
+        countLabel:"공통정책",
+        columns:["정책명","적용 제품","기준","상태","마지막 변경"],
+        rows:[
+          ["개인정보 전송 차단 공통 기준","RBI / PC / LLM","주민번호, 전화번호, 이메일","활성","2026-06-24 09:30"],
+          ["AI 사용 감사 로그 보존","전체 제품","365일 보존","활성","2026-06-20 11:10"],
+          ["예외 승인 공통 프로세스","전체 제품","부서장+보안관리자 승인","검토","2026-06-18 16:05"]
+        ]
+      },
+      "security-log":{
+        label:"AI 보안로그",
+        title:"AI 보안로그",
+        crumb:"AI 보안로그 / 통합 로그",
+        desc:"AI 서비스 사용, 보안 정책 위반, 이상행위, 관리자 조치 이력을 통합 조회합니다.",
+        metrics:["92K","오늘 로그","18","정책 위반","6","이상 호출","3","조치 진행"],
+        countLabel:"로그",
+        columns:["시간","제품","이벤트","위험도","조치"],
+        rows:[
+          ["2026-06-24 14:01","LLM Proxy","고객정보 포함 요청 차단","높음","담당자 통보"],
+          ["2026-06-24 13:36","PC Proxy","API Key 패턴 마스킹","중간","Key 회전 권고"],
+          ["2026-06-24 12:44","AI NDR","미승인 LLM API 호출 탐지","높음","조사 중"],
+          ["2026-06-24 11:24","AI-R RBI","파일 업로드 차단","중간","감사 로그 저장"]
+        ]
+      }
+    };    const llmScreens={
       "api-requests":{
         label:"API 사용 신청",
         title:"LLM Proxy API 사용 신청",
@@ -400,12 +446,12 @@
         desc:"Application에서 외부 LLM API를 사용하기 위한 권한, 모델, 예상 사용량과 비용을 신청합니다.",
         metrics:["18","접수 6건, 검토 중 8건","12","승인 대기 Application","$42K","월 예상 비용 합계","14:22","최근 신청 접수"],
         countLabel:"신청",
-        columns:["신청 Application","Provider·모델","처리 데이터","예상 사용량","상태","신청일"],
+        columns:["신청 Application","Provider·모델","예상 사용량","상태","신청일"],
         rows:[
-          ["R&D Code Assistant","OpenAI / GPT-4.1 mini","소스코드, 기술문서","월 850K tokens","보안 검토 중","2026-06-24 14:22","blue"],
-          ["Sales Insight Bot","Anthropic / Claude Sonnet","고객 상담 요약","월 1.2M tokens","개발관리자 검토","2026-06-24 11:08","orange"],
-          ["HR FAQ Assistant","Azure OpenAI / GPT-4o mini","HR FAQ, 사내 규정","월 220K tokens","보완 요청","2026-06-23 17:41","red"],
-          ["ERP Help Copilot","OpenAI / GPT-4.1 mini","ERP 화면 설명","월 430K tokens","승인 완료","2026-06-22 09:33","green"]
+          ["R&D Code Assistant","OpenAI / GPT-4.1 mini","월 850K tokens","보안 검토 중","2026-06-24 14:22","blue"],
+          ["Sales Insight Bot","Anthropic / Claude Sonnet","월 1.2M tokens","개발관리자 검토","2026-06-24 11:08","orange"],
+          ["HR FAQ Assistant","Google / Gemini Pro","월 220K tokens","보완 요청","2026-06-23 17:41","red"],
+          ["ERP Help Copilot","OpenAI / GPT-4.1 mini","월 430K tokens","승인 완료","2026-06-22 09:33","green"]
         ]
       },
       approvals:{
@@ -419,7 +465,7 @@
         rows:[
           ["R&D Code Assistant","OpenAI / GPT-4.1 mini","소스코드, 기술문서 / 월 850K tokens","$12,000","AI 보안 검토","박보안"],
           ["Sales Insight Bot","Anthropic / Claude Sonnet","고객 상담 요약 / 월 1.2M tokens","$8,000","개발관리자 검토","김개발"],
-          ["HR FAQ Assistant","Azure OpenAI / GPT-4o mini","HR FAQ, 사내 규정 / 월 220K tokens","$1,500","보완 요청","정인사"],
+          ["HR FAQ Assistant","Google / Gemini Pro","HR FAQ, 사내 규정 / 월 220K tokens","$1,500","보완 요청","정인사"],
           ["ERP Help Copilot","OpenAI / GPT-4.1 mini","ERP 화면 설명 / 월 430K tokens","$5,000","승인 완료","이운영"]
         ]
       },
@@ -434,7 +480,7 @@
         rows:[
           ["OpenAI Enterprise","GPT-4.1 mini","Vault: openai-prod-01","/v1/chat/completions","정상","2026-06-24 13:58"],
           ["Anthropic Team","Claude Sonnet","Vault: anthropic-rnd","/v1/messages","정상","2026-06-24 13:55"],
-          ["Azure OpenAI","GPT-4o mini","Vault: azure-eastus","/openai/deployments","지연 감지","2026-06-24 13:42"],
+          ["Google","GPT-4o mini","Vault: google-vertex","/v1beta/models","지연 감지","2026-06-24 13:42"],
           ["Google Vertex AI","Gemini Pro","Vault: vertex-ai-01","/v1beta/models","대기","2026-06-23 18:20"]
         ]
       },
@@ -445,12 +491,12 @@
         desc:"Application이 Provider별 인증정보를 직접 보유하지 않도록 플랫폼 가상 API키와 권한을 관리합니다.",
         metrics:["42","활성 가상 API키","1.28M","오늘 API 호출","3","중지된 Key","6개","권한 변경 대기"],
         countLabel:"가상 API키",
-        columns:["Application","가상 API키","허용 모델","한도","상태","최근 호출"],
+        columns:["Application","가상 API키","허용 모델","한도","상태","관리 조치"],
         rows:[
-          ["R&D Code Assistant","ak_live_rnd_****7421","GPT-4.1 mini, Claude Sonnet","월 $12,000","활성","2026-06-24 14:15"],
-          ["Sales Insight Bot","ak_live_sales_****1930","Claude Sonnet","월 $8,000","활성","2026-06-24 14:10"],
-          ["HR FAQ Assistant","ak_stage_hr_****8812","GPT-4o mini","월 $1,500","보류","2026-06-24 10:02"],
-          ["Legacy ERP Bot","ak_live_erp_****5510","GPT-4.1 mini","월 $4,000","중지","2026-06-21 16:45"]
+          ["R&D Code Assistant","ak_live_rnd_****7421","GPT-4.1 mini, Claude Sonnet","월 $12,000","활성","권한 변경 / Key 회전"],
+          ["Sales Insight Bot","ak_live_sales_****1930","Claude Sonnet","월 $8,000","활성","일시 중지 / 예산 조정"],
+          ["HR FAQ Assistant","ak_stage_hr_****8812","Gemini Pro","월 $1,500","보류","승인 재요청 / 담당자 통보"],
+          ["Legacy ERP Bot","ak_live_erp_****5510","GPT-4.1 mini","월 $4,000","중지","폐기 / 감사 보고"]
         ]
       },
       usage:{
@@ -460,12 +506,12 @@
         desc:"조직과 Application별 호출량, 토큰, 비용을 예산과 비교하고 한도 초과 조치를 수행합니다.",
         metrics:["1.28M","오늘 API 호출","$31.4K","이번 달 비용","84%","최고 예산 사용률","4건","한도 임계치 경고"],
         countLabel:"Application",
-        columns:["조직 / Application","호출량","토큰 사용량","월 비용","예산 사용률","조치"],
+        columns:["조직 / Application","호출량","토큰 사용량","월 비용","예산 사용률","관리 조치"],
         rows:[
-          ["R&D / Code Assistant","412K","18.2M","$10,080","84%","90% 도달 시 승인 요청"],
-          ["Sales / Insight Bot","366K","13.1M","$7,220","72%","정상"],
-          ["ERP / Help Copilot","188K","6.9M","$3,140","63%","정상"],
-          ["HR / FAQ Assistant","52K","1.4M","$620","41%","정상"]
+          ["R&D / Code Assistant","412K","18.2M","$10,080","84%","예산 증액 / 모델 제한"],
+          ["Sales / Insight Bot","366K","13.1M","$7,220","72%","알림 임계치 조정"],
+          ["ERP / Help Copilot","188K","6.9M","$3,140","63%","호출 한도 유지"],
+          ["HR / FAQ Assistant","52K","1.4M","$620","41%","저비용 모델 권고"]
         ]
       },
       audit:{
@@ -475,12 +521,12 @@
         desc:"사용자, API Key, Provider, 모델별 호출 이력과 보안 정책 적용 결과를 추적합니다.",
         metrics:["92K","감사 대상 호출","18","정책 위반","6","미승인 모델 시도","3건","시정 조치 진행"],
         countLabel:"감사 이벤트",
-        columns:["시간","사용자 / Key","Provider·모델","적용 정책","감사 결과","조치 상태"],
+        columns:["구분","시간","사용자 / Key","Provider·모델","감사 결과","조치 상태"],
         rows:[
-          ["2026-06-24 13:50","rnd-dev-21 / ak_live_rnd","OpenAI / GPT-4.1 mini","Secret 마스킹","정상 처리","완료"],
-          ["2026-06-24 12:44","sales-app / ak_live_sales","Anthropic / Claude Sonnet","고객정보 차단","정책 위반","담당자 통보"],
-          ["2026-06-24 10:21","unknown-key","OpenAI / 미승인 모델","허용 모델 목록","우회 시도","조사 중"],
-          ["2026-06-23 17:10","erp-help / ak_live_erp","OpenAI / GPT-4.1 mini","요청 로깅","정상 처리","완료"]
+          ["일반 호출","2026-06-24 13:50","rnd-dev-21 / ak_live_rnd","OpenAI / GPT-4.1 mini","정상 처리","완료"],
+          ["이상 호출","2026-06-24 12:44","sales-app / ak_live_sales","Anthropic / Claude Sonnet","정책 위반","담당자 통보"],
+          ["이상 호출","2026-06-24 10:21","unknown-key","OpenAI / 미승인 모델","우회 시도","조사 중"],
+          ["일반 호출","2026-06-23 17:10","erp-help / ak_live_erp","OpenAI / GPT-4.1 mini","정상 처리","완료"]
         ]
       },
       ops:{
@@ -490,22 +536,22 @@
         desc:"API 처리량, 응답시간, 오류율, Provider 상태와 장애 전환 결과를 모니터링합니다.",
         metrics:["정상","전체 서비스 상태","182ms","평균 응답시간","0.12%","오류율","2건","Failover 실행"],
         countLabel:"상태 항목",
-        columns:["대상","처리량","응답시간","오류율","상태","조치 이력"],
+        columns:["대상","처리량","응답시간","오류율","상태","관리 조치"],
         rows:[
-          ["LLM Gateway API","2,140 rpm","182ms","0.12%","정상","자동 확장 2회"],
-          ["OpenAI Route","1,180 rpm","168ms","0.08%","정상","없음"],
-          ["Anthropic Route","640 rpm","211ms","0.15%","정상","없음"],
-          ["Azure OpenAI Route","320 rpm","480ms","1.8%","지연","Claude로 일부 전환"]
+          ["LLM Gateway API","2,140 rpm","182ms","0.12%","정상","자동 확장 / 배포 잠금"],
+          ["OpenAI Route","1,180 rpm","168ms","0.08%","정상","우선 라우팅 유지"],
+          ["Anthropic Route","640 rpm","211ms","0.15%","정상","Failover 대기"],
+          ["Google Route","320 rpm","480ms","1.8%","지연","Claude로 일부 전환"]
         ]
       }
     };
     const toast=document.getElementById("toast");
-    let toastTimer,currentProduct="rbi",currentView="rules",isEditing=false,formInitialized=false,currentDetail=null;
+    let toastTimer,currentProduct="home",currentView="dashboard",isEditing=false,formInitialized=false,currentDetail=null;
     function notify(message){toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),1500)}
     function tagClass(text,fallback){return fallback || (text==="개인정보"?"green":text==="대외비"?"red":text==="비용"?"blue":"teal")}
-    function productLabel(){return document.querySelector(`.product-btn[data-product="${currentProduct}"] strong`).textContent}
-    function viewLabel(){return currentProduct==="llm"&&llmScreens[currentView]?llmScreens[currentView].label:(currentView==="policies"?"정책":"규정")}
-    function productTagClass(){return currentProduct==="llm"?"blue":currentProduct==="rbi"?"purple":currentProduct==="ndr"?"teal":"green"}
+    function productLabel(){return document.querySelector(`.product-btn[data-product="${currentProduct}"] strong`)?.textContent || (globalScreens[currentProduct]?.label || "AI-R Security Platform")}
+    function viewLabel(){return globalScreens[currentProduct]?.label || (currentProduct==="llm"&&llmScreens[currentView]?llmScreens[currentView].label:(currentView==="policies"?"정책":"규정"))}
+    function productTagClass(){return currentProduct==="llm"?"red":currentProduct==="rbi"?"blue":currentProduct==="ndr"?"orange":currentProduct==="pc"?"orange":"gray"}
     function inferEntryType(){
       if(currentProduct==="pc"){
         const active=document.querySelector(".type-card.active strong")?.textContent || "";
@@ -533,9 +579,8 @@
         "api-requests":`
           <div class="form-row"><div class="form-label">Application 정보 <span class="required">*</span></div><div class="grid-2"><input id="form-name" class="input" value="R&D Code Assistant"><input id="form-scope" class="input" value="R&D 본부 / 개발팀"></div></div>
           <div class="form-row"><div class="form-label">사용 목적</div><textarea id="form-desc" class="textarea">코드 리뷰, 테스트 케이스 생성, 보안 취약점 설명을 위해 LLM API를 사용합니다.</textarea></div>
-          <div class="form-row"><div class="form-label">LLM 기능·모델</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">기능</div><div class="checks"><label class="check"><input type="checkbox" checked>채팅</label><label class="check"><input type="checkbox" checked>코드 생성</label><label class="check"><input type="checkbox">요약</label><label class="check"><input type="checkbox">임베딩</label></div></div><div class="criteria-row"><div class="criteria-title">Provider·모델</div><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI / GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Anthropic / Claude Sonnet</label><label class="check"><input type="checkbox">Azure OpenAI</label></div></div></div></div>
-          <div class="form-row"><div class="form-label">처리 데이터</div><div class="checks"><label class="check"><input type="checkbox" checked>소스코드</label><label class="check"><input type="checkbox" checked>기술문서</label><label class="check"><input type="checkbox">개인정보 포함 가능</label><label class="check"><input type="checkbox" checked>Secret 탐지 필요</label></div></div>
-          <div class="form-row"><div class="form-label">예상 사용량·기간</div><div class="grid-4"><input class="input" value="월 850K tokens"><input class="input" value="월 $12,000"><input class="input" value="2026-07-01 ~ 2026-12-31"><select class="select"><option>Dev / Stage</option><option>Prod</option></select></div></div>`,
+          <div class="form-row"><div class="form-label">LLM 기능·모델</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">기능</div><div class="checks"><label class="check"><input type="checkbox" checked>채팅</label><label class="check"><input type="checkbox" checked>코드 생성</label><label class="check"><input type="checkbox">요약</label><label class="check"><input type="checkbox">임베딩</label></div></div><div class="criteria-row"><div class="criteria-title">Provider·모델</div><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI / GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Anthropic / Claude Sonnet</label><label class="check"><input type="checkbox">Google</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">예상 사용량·기간</div><div class="grid-4"><input class="input" value="월 850K tokens"><input class="input" value="월 $12,000"><input class="input" value="2026-07-01 ~ 2026-12-31"><select class="select"><option>Prod</option></select></div></div>`,
         approvals:`
           <div class="form-row"><div class="form-label">승인 대상 신청</div><div><input id="form-name" class="input" value="Sales Insight Bot API 사용 신청"><div class="criteria" style="margin-top:10px"><div class="criteria-row"><div class="criteria-title">업무 목적</div><div>영업 리드와 상담 내용을 요약하여 영업 활동 우선순위를 제안합니다.</div></div><div class="criteria-row"><div class="criteria-title">예상 호출량</div><div>월 1.2M tokens / 월 $8,000</div></div></div></div></div>
           <div class="form-row"><div class="form-label">승인 조건</div><div class="grid-4"><input id="form-scope" class="input" value="Sales 본부"><input class="input" value="월 예산 $8,000"><input class="input" value="일 호출 50,000건"><input class="input" value="2026-12-31까지"></div></div>
@@ -557,7 +602,7 @@
           <div class="form-row"><div class="form-label">조회 항목</div><div class="checks"><label class="check"><input type="checkbox" checked>사용자</label><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Provider·모델</label><label class="check"><input type="checkbox" checked>정책 결과</label><label class="check"><input type="checkbox">요청·응답 전문</label></div></div>
           <div class="form-row"><div class="form-label">보고서·조치</div><div class="checks"><label class="check"><input type="checkbox" checked>PDF 보고서 생성</label><label class="check"><input type="checkbox" checked>미승인 모델 사용 조사</label><label class="check"><input type="checkbox" checked>시정 조치 상태 관리</label></div></div>`,
         ops:`
-          <div class="form-row"><div class="form-label">운영 조치 대상</div><div class="grid-2"><input id="form-name" class="input" value="Azure OpenAI Route 지연 대응"><input id="form-scope" class="input" value="Provider Route"></div></div>
+          <div class="form-row"><div class="form-label">운영 조치 대상</div><div class="grid-2"><input id="form-name" class="input" value="Google Route 지연 대응"><input id="form-scope" class="input" value="Provider Route"></div></div>
           <div class="form-row"><div class="form-label">상태 지표</div><div class="grid-4"><input class="input" value="응답시간 480ms"><input class="input" value="오류율 1.8%"><input class="input" value="처리량 320 rpm"><input class="input" value="영향 Application 4개"></div></div>
           <div class="form-row"><div class="form-label">장애 전환</div><div class="checks"><label class="check"><input type="checkbox" checked>Claude Sonnet으로 전환</label><label class="check"><input type="checkbox" checked>OpenAI Route 예비 사용</label><label class="check"><input type="checkbox" checked>복구 후 원인 기록</label><label class="check"><input type="checkbox">사용자 공지</label></div></div>`
       };
@@ -602,11 +647,11 @@
           <div class="form-row"><div class="form-label">설명</div><textarea id="form-desc" class="textarea">${currentView==="rules"?"업무 Application이 승인된 Provider와 모델만 사용하도록 제한하고, 미승인 모델 호출은 승인 요청으로 전환합니다.":"R&D 조직의 LLM API 사용에 승인 모델, Secret 마스킹, 월 예산 한도 규정을 함께 적용합니다."}</textarea></div>
           ${currentView==="rules"?`
           <div class="form-row"><div class="form-label">규정 유형</div><div class="grid-4"><div class="choice selected" data-panel="llm-provider-fields"><strong>Provider·모델</strong><p>허용 Provider, 모델, 라우팅 조건 제한</p></div><div class="choice" data-panel="llm-sensitive-fields"><strong>민감정보 탐지</strong><p>요청·응답의 개인정보와 Secret 검사</p></div><div class="choice" data-panel="llm-cost-fields"><strong>비용 한도</strong><p>Application별 예산과 호출량 통제</p></div><div class="choice" data-panel="llm-audit-fields"><strong>감사 로깅</strong><p>요청·응답 저장 범위 지정</p></div></div></div>
-          <div id="llm-provider-fields" class="dynamic-panel active"><div class="form-row"><div class="form-label">판정 조건</div><div class="grid-2"><div class="box"><div class="box-head"><h3>허용 Provider</h3><span class="tag blue">필수</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI</label><label class="check"><input type="checkbox" checked>Anthropic</label><label class="check"><input type="checkbox">Google</label><label class="check"><input type="checkbox">Azure OpenAI</label></div></div></div><div class="box"><div class="box-head"><h3>허용 모델</h3><span class="tag green">목록</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Claude Sonnet</label><label class="check"><input type="checkbox">Gemini Pro</label></div></div></div><div class="condition-row"><select class="select"><option>Application 권한</option></select><select class="select"><option>포함</option></select><input class="input" value="승인된 API Key"><button class="remove-btn" type="button">×</button></div><div class="condition-row"><select class="select"><option>Provider 상태</option></select><select class="select"><option>같음</option></select><input class="input" value="정상 또는 Failover 가능"><button class="remove-btn" type="button">×</button></div></div></div></div>
+          <div id="llm-provider-fields" class="dynamic-panel active"><div class="form-row"><div class="form-label">판정 조건</div><div class="grid-2"><div class="box"><div class="box-head"><h3>허용 Provider</h3><span class="tag blue">필수</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI</label><label class="check"><input type="checkbox" checked>Anthropic</label><label class="check"><input type="checkbox">Google</label><label class="check"><input type="checkbox">Google</label></div></div></div><div class="box"><div class="box-head"><h3>허용 모델</h3><span class="tag green">목록</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Claude Sonnet</label><label class="check"><input type="checkbox">Gemini Pro</label></div></div></div><div class="condition-row"><select class="select"><option>Application 권한</option></select><select class="select"><option>포함</option></select><input class="input" value="승인된 API Key"><button class="remove-btn" type="button">×</button></div><div class="condition-row"><select class="select"><option>Provider 상태</option></select><select class="select"><option>같음</option></select><input class="input" value="정상 또는 Failover 가능"><button class="remove-btn" type="button">×</button></div></div></div></div>
           <div id="llm-sensitive-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">탐지할 민감정보</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">개인정보</div><div class="checks"><label class="check"><input type="checkbox" checked>주민번호</label><label class="check"><input type="checkbox" checked>전화번호</label><label class="check"><input type="checkbox" checked>이메일</label><label class="check"><input type="checkbox">계좌번호</label><label class="check"><input type="checkbox">카드번호</label></div></div><div class="criteria-row"><div class="criteria-title">기밀정보</div><div class="checks"><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Access Token</label><label class="check"><input type="checkbox" checked>Private Key</label><label class="check"><input type="checkbox">고객 식별자</label></div></div><div class="criteria-row"><div class="criteria-title">검사 방향</div><div class="checks"><label class="check"><input type="checkbox" checked>요청 프롬프트</label><label class="check"><input type="checkbox" checked>응답 본문</label><label class="check"><input type="checkbox" checked>첨부 파일</label></div></div></div></div></div>
           <div id="llm-cost-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">API 사용량 한도</div><div class="grid-3"><input class="input" value="월 예산 $50,000"><input class="input" value="일 호출 1,000,000건"><input class="input" value="분당 2,000 TPM"></div></div><div class="form-row"><div class="form-label">임계치 조치</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">80%</div><div class="checks"><label class="check"><input type="checkbox" checked>운영자 알림</label><label class="check"><input type="checkbox" checked>대시보드 경고</label></div></div><div class="criteria-row"><div class="criteria-title">90%</div><div class="checks"><label class="check"><input type="checkbox" checked>부서장 승인 요청</label><label class="check"><input type="checkbox">저비용 모델 전환</label></div></div><div class="criteria-row"><div class="criteria-title">100%</div><div class="checks"><label class="check"><input type="checkbox" checked>호출 차단</label><label class="check"><input type="checkbox" checked>예외 신청 허용</label></div></div></div></div></div>
           <div id="llm-audit-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">감사 로그 저장 범위</div><div class="checks"><label class="check"><input type="checkbox" checked>사용자/조직</label><label class="check"><input type="checkbox" checked>Application</label><label class="check"><input type="checkbox" checked>Provider/모델</label><label class="check"><input type="checkbox" checked>요청 메타데이터</label><label class="check"><input type="checkbox">응답 전문</label></div></div><div class="form-row"><div class="form-label">보존 기간</div><div class="grid-3"><input class="input" value="365일"><select class="select"><option>민감정보 마스킹 저장</option></select><select class="select"><option>감사 관리자만 조회</option></select></div></div></div>`:`
-          <div class="form-row"><div class="form-label">적용 대상</div><div class="grid-3"><select class="select"><option>조직: R&D 본부</option><option>조직: 전사</option></select><select class="select"><option>Application: R&D Code Assistant</option><option>Application: Sales Insight Bot</option></select><select class="select"><option>환경: Dev / Stage</option><option>환경: Prod</option></select></div></div>
+          <div class="form-row"><div class="form-label">적용 대상</div><div class="grid-2"><select class="select"><option>조직: R&D 본부</option><option>조직: 전사</option></select><select class="select"><option>Application: R&D Code Assistant</option><option>Application: Sales Insight Bot</option></select></div></div>
           <div class="form-row"><div class="form-label">연결 규정</div><div class="select-table"><table><tbody><tr><td><strong>Provider 승인 모델 목록</strong><small>승인 모델만 허용</small></td><td><span class="tag blue">AI서비스</span></td><td>승인 요청</td></tr><tr><td><strong>API Key / Token 마스킹</strong><small>Secret 패턴 자동 치환</small></td><td><span class="tag orange">대외비</span></td><td>마스킹</td></tr><tr><td><strong>부서별 LLM API 월 예산</strong><small>예산 90% 알림, 100% 차단</small></td><td><span class="tag blue">비용</span></td><td>한도 관리</td></tr></tbody></table></div></div>
           <div class="form-row"><div class="form-label">배포 방식</div><div class="grid-3"><div class="choice"><strong>즉시 배포</strong><p>대상 전체 바로 적용</p></div><div class="choice selected"><strong>Canary 배포</strong><p>10% 트래픽부터 적용</p></div><div class="choice"><strong>예약 배포</strong><p>업무 영향 낮은 시간 적용</p></div></div></div>`}
           <div class="form-row"><div class="form-label">적용 범위</div><input id="form-scope" class="input" value="${currentView==="rules"?"전사 Application":"R&D 본부 / Dev·Stage"}"></div>`;
@@ -651,9 +696,10 @@
       document.getElementById("save-form").textContent="승인";
       const detailRows=screen.columns.map((column,index)=>`<div class="criteria-row"><div class="criteria-title">${column}</div><div>${row[index]||"-"}</div></div>`).join("");
       const approvalExtra=detail.view==="approvals"?`<div class="form-row"><div class="form-label">승인 검토</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">검토 의견</div><textarea class="textarea">업무 목적과 예상 사용량을 확인했습니다. 개인정보/기밀정보 탐지 정책과 월 예산 한도를 적용한 후 사용을 승인합니다.</textarea></div><div class="criteria-row"><div class="criteria-title">승인 조건</div><div class="checks"><label class="check"><input type="checkbox" checked>월 예산 한도 적용</label><label class="check"><input type="checkbox" checked>허용 모델 제한</label><label class="check"><input type="checkbox" checked>요청·응답 로깅</label><label class="check"><input type="checkbox" checked>민감정보 차단 정책 적용</label></div></div></div></div>`:"";
-      const usageExtra=detail.view==="usage"?`<div class="form-row"><div class="form-label">사용량 상세</div><div class="grid-4"><div class="service-card"><strong>예산 대비</strong><p>${row[4]||"-"}</p><span class="tag blue">Budget</span></div><div class="service-card"><strong>호출량</strong><p>${row[1]||"-"}</p><span class="tag teal">Calls</span></div><div class="service-card"><strong>토큰</strong><p>${row[2]||"-"}</p><span class="tag purple">Tokens</span></div><div class="service-card"><strong>조치</strong><p>${row[5]||"-"}</p><span class="tag orange">Action</span></div></div></div>`:"";
-      const opsExtra=detail.view==="ops"?`<div class="form-row"><div class="form-label">운영 상태 상세</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">상태 점검</div><div class="checks"><label class="check"><input type="checkbox" checked>처리량 정상</label><label class="check"><input type="checkbox" checked>응답시간 모니터링</label><label class="check"><input type="checkbox" checked>오류율 추적</label><label class="check"><input type="checkbox">Failover 필요</label></div></div><div class="criteria-row"><div class="criteria-title">조치 이력</div><div>${row[5]||"-"}</div></div></div></div>`:"";
-      document.getElementById("form-dynamic").innerHTML=`<div class="form-row"><div class="form-label">상세 정보</div><div class="criteria">${detailRows}</div></div>${approvalExtra}${usageExtra}${opsExtra}`;
+      const keyExtra=detail.view==="api-keys"?`<div class="form-row"><div class="form-label">관리자 조치</div><div class="action-grid"><div class="action-card selected"><strong>Key 회전</strong><p>노출 의심 또는 주기 만료 시 가상 API키를 재발급합니다.</p><span class="tag blue">Rotate</span></div><div class="action-card selected"><strong>권한 변경</strong><p>허용 모델, 조직, 호출 범위를 조정합니다.</p><span class="tag teal">Scope</span></div><div class="action-card"><strong>일시 중지</strong><p>이상 호출 또는 비용 초과 시 Key를 중지합니다.</p><span class="tag red">Suspend</span></div><div class="action-card"><strong>소유자 통보</strong><p>Application 담당자에게 조치 내용을 알립니다.</p><span class="tag orange">Notify</span></div></div></div>`:"";
+      const usageExtra=detail.view==="usage"?`<div class="form-row"><div class="form-label">관리자 조치</div><div class="action-grid"><div class="action-card selected"><strong>예산 조정</strong><p>부서 예산을 증액하거나 월 한도를 낮춥니다.</p><span class="tag blue">Budget</span></div><div class="action-card selected"><strong>호출 제한</strong><p>분당 TPM과 일 호출량을 즉시 조정합니다.</p><span class="tag orange">Limit</span></div><div class="action-card"><strong>모델 전환</strong><p>고비용 모델을 저비용 모델로 전환합니다.</p><span class="tag teal">Route</span></div><div class="action-card"><strong>Key 중지</strong><p>과도한 사용이 지속되면 가상 API키를 중지합니다.</p><span class="tag red">Stop</span></div></div></div>`:"";
+      const opsExtra=detail.view==="ops"?`<div class="form-row"><div class="form-label">운영 조치</div><div class="action-grid"><div class="action-card selected"><strong>Failover 실행</strong><p>지연 Provider를 우회해 대체 Provider로 전환합니다.</p><span class="tag red">Failover</span></div><div class="action-card selected"><strong>라우팅 가중치 조정</strong><p>Provider별 트래픽 비중을 조정합니다.</p><span class="tag blue">Route</span></div><div class="action-card"><strong>장애 공지</strong><p>영향 Application 담당자에게 상태를 알립니다.</p><span class="tag orange">Notice</span></div><div class="action-card"><strong>복구 기록</strong><p>원인, 영향 범위, 조치 이력을 남깁니다.</p><span class="tag teal">Record</span></div></div></div>`:"";
+      document.getElementById("form-dynamic").innerHTML=`<div class="form-row"><div class="form-label">상세 정보</div><div class="criteria">${detailRows}</div></div>${approvalExtra}${keyExtra}${usageExtra}${opsExtra}`;
     }    function render(){
       const product=products[currentProduct];
       const screen=currentProduct==="llm"?llmScreens[currentView]:null;
@@ -664,7 +710,7 @@
       document.getElementById("product-desc").textContent=screen?screen.desc:product.desc;
       document.getElementById("list-view").classList.toggle("hidden",isEditing||!!currentDetail);
       document.getElementById("edit-view").classList.toggle("active",isEditing||!!currentDetail);
-      const noAdd=screen&&["usage","ops"].includes(currentView);
+      const noAdd=screen&&(currentProduct!=="llm"||["usage","ops"].includes(currentView));
       document.getElementById("add-button").style.display=(isEditing||currentDetail||noAdd)?"none":"inline-flex";
       if(currentDetail){
         renderDetailForm(currentDetail);
@@ -684,6 +730,8 @@
       formInitialized=false;
       const metrics=screen?screen.metrics:product.metrics;
       document.getElementById("metric-rules-label").textContent=screen?"관리 항목":(currentView==="policies"?"활성 정책":"활성 규정");
+      const metricLabels=screen?.metricLabels || [document.getElementById("metric-rules-label").textContent,"적용 범위","검토 필요","마지막 배포"];
+      document.querySelectorAll(".summary-card > span").forEach((item,index)=>item.textContent=metricLabels[index]||item.textContent);
       document.getElementById("metric-rules").textContent=metrics[0];
       document.getElementById("metric-rules-desc").textContent=metrics[1];
       document.getElementById("metric-coverage").textContent=metrics[2];
@@ -700,7 +748,7 @@
       let rows=screen?screen.rows.filter(row=>row.join(" ").toLowerCase().includes(query)):product.rows.filter(row=>(type==="all"||row[1]===type)&&row[0].toLowerCase().includes(query));
       if(!screen && currentView==="policies") rows=rows.map(row=>[row[0].replace("규정","정책"),row[1],row[2],row[3],row[4],row[5]]);
       document.getElementById("row-count").textContent=rows.length+"개";
-      document.getElementById("policy-body").innerHTML=screen?rows.map(row=>{const rowIndex=screen.rows.indexOf(row);const clickable=["approvals","usage","ops"].includes(currentView);return `<tr ${clickable?`class="clickable" data-row-index="${rowIndex}"`:""}>${row.slice(0,columns.length).map((cell,index)=>index===0?`<td><strong>${cell}</strong></td>`:`<td><span class="${index===columns.length-2?"tag "+tagClass(cell,row[6]):"muted"}">${cell}</span></td>`).join("")}</tr>`}).join(""):rows.map(row=>`<tr><td><strong>${row[0]}</strong></td><td><span class="tag ${tagClass(row[1],row[5])}">${row[1]}</span></td><td>${row[2]}</td><td><span class="muted">${row[3]}</span></td><td>${row[4]}</td></tr>`).join("");
+      document.getElementById("policy-body").innerHTML=screen?rows.map(row=>{const rowIndex=screen.rows.indexOf(row);const clickable=["approvals","api-keys","usage","ops"].includes(currentView);return `<tr ${clickable?`class="clickable" data-row-index="${rowIndex}"`:""}>${row.slice(0,columns.length).map((cell,index)=>index===0?`<td><strong>${cell}</strong></td>`:`<td><span class="${index===columns.length-2?"tag "+tagClass(cell,row[6]):"muted"}">${cell}</span></td>`).join("")}</tr>`}).join(""):rows.map(row=>`<tr><td><strong>${row[0]}</strong></td><td><span class="tag ${tagClass(row[1],row[5])}">${row[1]}</span></td><td>${row[2]}</td><td><span class="muted">${row[3]}</span></td><td>${row[4]}</td></tr>`).join("");
       document.getElementById("empty").style.display=rows.length?"none":"grid";
     }
     function selectProduct(productKey, viewKey="rules"){
@@ -717,6 +765,10 @@
       document.getElementById("type-filter").value="all";
       render();
     }
+    document.querySelectorAll(".nav-item[data-global]").forEach(button=>button.addEventListener("click",()=>{
+      selectGlobal(button.dataset.global);
+      notify(button.textContent.trim()+" 화면으로 전환했습니다.");
+    }));
     document.querySelectorAll(".product-btn").forEach(button=>button.addEventListener("click",()=>{
       const nextView=button.dataset.product==="llm"?"api-requests":"rules";
       selectProduct(button.dataset.product,nextView);
@@ -731,7 +783,7 @@
         document.getElementById("policy-body").addEventListener("click",(event)=>{
       const row=event.target.closest("tr[data-row-index]");
       if(!row) return;
-      if(!(currentProduct==="llm"&&["approvals","usage","ops"].includes(currentView))) return;
+      if(!(currentProduct==="llm"&&["approvals","api-keys","usage","ops"].includes(currentView))) return;
       currentDetail={view:currentView,index:Number(row.dataset.rowIndex)};
       isEditing=false;
       formInitialized=false;
@@ -792,7 +844,7 @@
       const stamp=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
       if(screen){
         const workflowRows={
-          "api-requests":[name,"OpenAI / GPT-4.1 mini","소스코드, 기술문서","월 850K tokens","접수",stamp,"blue"],
+          "api-requests":[name,"OpenAI / GPT-4.1 mini","월 850K tokens","접수",stamp,"blue"],
           approvals:[name,"업무 필요성 검토","$8,000","보안 검토 필요","승인 대기",scope,"orange"],
           connections:[name,"GPT-4.1 mini","Vault 신규 등록","/v1/chat/completions","테스트 필요",stamp,"orange"],
           "api-keys":[name,"ak_new_****pending","GPT-4.1 mini","월 $12,000","발급 대기",stamp,"orange"],
@@ -820,6 +872,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 

@@ -59,6 +59,7 @@
     .product-btn[data-product="pc"]{--product:var(--green)}
     .product-btn[data-product="llm"]{--product:var(--blue)}
     .product-btn[data-product="rbi"]{--product:var(--purple)}
+    .product-btn[data-product="ndr"]{--product:var(--teal)}
     .product-icon{display:grid;width:30px;height:30px;place-items:center;border-radius:8px;color:#fff;background:var(--product);font-size:11px;font-weight:900}
     .product-text strong{display:block;font-size:12px;color:#27313f}
     .product-text span{display:block;margin-top:4px;color:#87919e;font-size:10px;line-height:1.3}
@@ -241,33 +242,37 @@
 
         <div class="nav-title">제품별 정책관리</div>
         <div class="product-menu" aria-label="제품별 정책관리">
-          <div class="product-section open" data-section="pc">
-            <button class="product-btn active" data-product="pc"><span class="product-icon">PC</span><span class="product-text"><strong>PC Proxy</strong><span>단말·Agent·도구</span></span><span class="product-count">12</span></button>
+          <div class="product-section open" data-section="rbi">
+            <button class="product-btn active" data-product="rbi"><span class="product-icon">RBI</span><span class="product-text"><strong>AI-R RBI</strong><span>원격 격리</span></span><span class="product-count">6</span></button>
             <div class="product-submenu">
-              <button class="product-sub active" data-product="pc" data-view="rules">규정</button>
+              <button class="product-sub active" data-product="rbi" data-view="rules">규정</button>
+              <button class="product-sub" data-product="rbi" data-view="policies">정책 관리</button>
+            </div>
+          </div>
+          <div class="product-section" data-section="pc">
+            <button class="product-btn" data-product="pc"><span class="product-icon">PC</span><span class="product-text"><strong>PC Proxy</strong><span>단말·Agent·도구</span></span><span class="product-count">12</span></button>
+            <div class="product-submenu">
+              <button class="product-sub" data-product="pc" data-view="rules">규정</button>
               <button class="product-sub" data-product="pc" data-view="policies">정책 관리</button>
+            </div>
+          </div>
+          <div class="product-section" data-section="ndr">
+            <button class="product-btn" data-product="ndr"><span class="product-icon">NDR</span><span class="product-text"><strong>AI NDR</strong><span>네트워크·이상행위</span></span><span class="product-count">8</span></button>
+            <div class="product-submenu">
+              <button class="product-sub" data-product="ndr" data-view="rules">규정</button>
+              <button class="product-sub" data-product="ndr" data-view="policies">정책 관리</button>
             </div>
           </div>
           <div class="product-section" data-section="llm">
             <button class="product-btn" data-product="llm"><span class="product-icon">LLM</span><span class="product-text"><strong>LLM Proxy</strong><span>API·비용·Provider</span></span><span class="product-count">10</span></button>
             <div class="product-submenu">
-              <button class="product-sub" data-product="llm" data-view="rules">규정</button>
-              <button class="product-sub" data-product="llm" data-view="policies">정책 관리</button>
               <button class="product-sub" data-product="llm" data-view="api-requests">API 사용 신청</button>
               <button class="product-sub" data-product="llm" data-view="approvals">신청 승인</button>
               <button class="product-sub" data-product="llm" data-view="connections">Provider 연결</button>
-              <button class="product-sub" data-product="llm" data-view="api-keys">통합 API Key</button>
-              <button class="product-sub" data-product="llm" data-view="usage">사용량·비용</button>
-              <button class="product-sub" data-product="llm" data-view="audit">사용 감사</button>
-              <button class="product-sub" data-product="llm" data-view="leakage">유출 모니터링</button>
-              <button class="product-sub" data-product="llm" data-view="ops">운영 상태</button>
-            </div>
-          </div>
-          <div class="product-section" data-section="rbi">
-            <button class="product-btn" data-product="rbi"><span class="product-icon">RBI</span><span class="product-text"><strong>AI-R RBI</strong><span>원격 격리</span></span><span class="product-count">6</span></button>
-            <div class="product-submenu">
-              <button class="product-sub" data-product="rbi" data-view="rules">규정</button>
-              <button class="product-sub" data-product="rbi" data-view="policies">정책 관리</button>
+              <button class="product-sub" data-product="llm" data-view="api-keys">가상 API키 관리</button>
+              <button class="product-sub" data-product="llm" data-view="usage">사용량 관리</button>
+              <button class="product-sub" data-product="llm" data-view="ops">운영 상태 관리</button>
+              <button class="product-sub" data-product="llm" data-view="audit">API 사용 감사</button>
             </div>
           </div>
         </div>
@@ -276,9 +281,9 @@
       <main class="content">
         <div class="page-head">
           <div class="title-wrap">
-            <div class="crumb" id="product-crumb">PC Proxy / 정책관리</div>
-            <h1 id="product-title">PC Proxy 규정</h1>
-            <p id="product-desc">단말에 설치된 AI Agent, 브라우저, MCP·플러그인 도구 접근을 통제하는 정책을 관리합니다.</p>
+            <div class="crumb" id="product-crumb">AI-R RBI / 정책관리</div>
+            <h1 id="product-title">AI-R RBI 규정</h1>
+            <p id="product-desc">외부 AI 웹 서비스를 원격 격리 환경으로 연결하고 업로드·다운로드·클립보드 유출을 통제합니다.</p>
           </div>
           <div class="actions">
             <button id="add-button" class="btn primary"><span class="plus">+</span> 추가</button>
@@ -358,6 +363,19 @@
           ["Claude 비용 임계치 경고","비용","Sales Insight Bot","경고","2026-06-08 16:33","blue"]
         ]
       },
+      ndr:{
+        title:"AI NDR 규정",
+        crumb:"AI NDR / 정책관리",
+        desc:"AI 서비스와 관련된 네트워크 트래픽, 비정상 API 호출, 우회 접속과 데이터 유출 징후를 탐지합니다.",
+        metrics:["8","네트워크 탐지 규정","2.4M","오늘 분석 세션","9","이상행위 검토","11:40","2026-06-22 배포 완료"],
+        rows:[
+          ["미승인 LLM API 직접 호출 탐지","AI서비스","전사 네트워크","이상행위 탐지","2026-06-22 11:40","teal"],
+          ["AI 서비스 우회 접속 탐지","AI서비스","전사","경고","2026-06-20 09:12","orange"],
+          ["대량 프롬프트 전송 이상행위","대외비","개발 / R&D","분석 큐 등록","2026-06-18 16:25","red"],
+          ["비정상 토큰 사용량 급증","비용","LLM Gateway","운영자 알림","2026-06-16 14:32","blue"],
+          ["외부 AI 도메인 신규 접속 탐지","AI서비스","전사","승인 요청","2026-06-12 18:03","teal"]
+        ]
+      },
       rbi:{
         title:"AI-R RBI 규정",
         crumb:"AI-R RBI / 정책관리",
@@ -392,15 +410,15 @@
         label:"신청 승인",
         title:"LLM Proxy API 사용 신청 승인",
         crumb:"LLM Proxy / 신청 승인",
-        desc:"업무 필요성, 비용 한도, 데이터 위험과 적용 보안 정책을 검토하여 API 사용을 승인합니다.",
-        metrics:["12","승인 대기 7건","5","보안 검토 필요","$18K","이번 주 승인 예산","2건","반려·보완 요청"],
-        countLabel:"승인 건",
-        columns:["신청명","업무 목적","월 예산","보안 위험","처리 상태","담당자"],
+        desc:"API 사용 신청 화면에서 접수된 신청 목록을 기준으로 업무 필요성, 비용 한도, 데이터 위험과 보안 정책을 검토합니다.",
+        metrics:["4","신청 목록 기준","2","승인 대기","$21.5K","월 예상 비용","2건","보안 검토 필요"],
+        countLabel:"신청 검토",
+        columns:["신청 Application","Provider·모델","신청 내용","월 예상 비용","승인 상태","검토 담당"],
         rows:[
-          ["Sales Insight Bot API","영업 리드 요약 자동화","$8,000","개인정보 포함 가능","개발관리자 승인 대기","김개발"],
-          ["R&D Code Assistant","코드 리뷰와 테스트 생성","$12,000","Secret 탐지 필요","AI 보안 검토","박보안"],
-          ["Finance Report Helper","월말 보고서 초안 작성","$3,500","재무 대외비 포함","보완 요청","정재무"],
-          ["ERP Help Copilot","ERP 업무 질의 응답","$5,000","낮음","승인 완료","이운영"]
+          ["R&D Code Assistant","OpenAI / GPT-4.1 mini","소스코드, 기술문서 / 월 850K tokens","$12,000","AI 보안 검토","박보안"],
+          ["Sales Insight Bot","Anthropic / Claude Sonnet","고객 상담 요약 / 월 1.2M tokens","$8,000","개발관리자 검토","김개발"],
+          ["HR FAQ Assistant","Azure OpenAI / GPT-4o mini","HR FAQ, 사내 규정 / 월 220K tokens","$1,500","보완 요청","정인사"],
+          ["ERP Help Copilot","OpenAI / GPT-4.1 mini","ERP 화면 설명 / 월 430K tokens","$5,000","승인 완료","이운영"]
         ]
       },
       connections:{
@@ -419,13 +437,13 @@
         ]
       },
       "api-keys":{
-        label:"통합 API Key",
-        title:"LLM Proxy 통합 API Key",
-        crumb:"LLM Proxy / 통합 API Key",
-        desc:"Application이 Provider 차이 없이 단일 API로 호출할 수 있도록 플랫폼 API Key와 권한을 관리합니다.",
-        metrics:["42","활성 플랫폼 Key","1.28M","오늘 통합 API 호출","3","중지된 Key","6개","권한 변경 대기"],
-        countLabel:"API Key",
-        columns:["Application","플랫폼 API Key","허용 모델","한도","상태","최근 호출"],
+        label:"가상 API키 관리",
+        title:"LLM Proxy 가상 API키 관리",
+        crumb:"LLM Proxy / 가상 API키 관리",
+        desc:"Application이 Provider별 인증정보를 직접 보유하지 않도록 플랫폼 가상 API키와 권한을 관리합니다.",
+        metrics:["42","활성 가상 API키","1.28M","오늘 API 호출","3","중지된 Key","6개","권한 변경 대기"],
+        countLabel:"가상 API키",
+        columns:["Application","가상 API키","허용 모델","한도","상태","최근 호출"],
         rows:[
           ["R&D Code Assistant","ak_live_rnd_****7421","GPT-4.1 mini, Claude Sonnet","월 $12,000","활성","2026-06-24 14:15"],
           ["Sales Insight Bot","ak_live_sales_****1930","Claude Sonnet","월 $8,000","활성","2026-06-24 14:10"],
@@ -434,9 +452,9 @@
         ]
       },
       usage:{
-        label:"사용량·비용",
-        title:"LLM Proxy API 사용량·비용 관리",
-        crumb:"LLM Proxy / 사용량·비용",
+        label:"사용량 관리",
+        title:"LLM Proxy 사용량 관리",
+        crumb:"LLM Proxy / 사용량 관리",
         desc:"조직과 Application별 호출량, 토큰, 비용을 예산과 비교하고 한도 초과 조치를 수행합니다.",
         metrics:["1.28M","오늘 API 호출","$31.4K","이번 달 비용","84%","최고 예산 사용률","4건","한도 임계치 경고"],
         countLabel:"Application",
@@ -449,9 +467,9 @@
         ]
       },
       audit:{
-        label:"사용 감사",
-        title:"LLM Proxy AI API 사용 감사",
-        crumb:"LLM Proxy / 사용 감사",
+        label:"API 사용 감사",
+        title:"LLM Proxy API 사용 감사",
+        crumb:"LLM Proxy / API 사용 감사",
         desc:"사용자, API Key, Provider, 모델별 호출 이력과 보안 정책 적용 결과를 추적합니다.",
         metrics:["92K","감사 대상 호출","18","정책 위반","6","미승인 모델 시도","3건","시정 조치 진행"],
         countLabel:"감사 이벤트",
@@ -463,25 +481,10 @@
           ["2026-06-23 17:10","erp-help / ak_live_erp","OpenAI / GPT-4.1 mini","요청 로깅","정상 처리","완료"]
         ]
       },
-      leakage:{
-        label:"유출 모니터링",
-        title:"LLM Proxy 정보 유출 모니터링",
-        crumb:"LLM Proxy / 유출 모니터링",
-        desc:"프롬프트와 응답에서 개인정보·기밀정보 유출을 탐지하고 마스킹, 차단, Key 중지 조치를 수행합니다.",
-        metrics:["37","오늘 탐지 이벤트","11","요청 차단","24","마스킹 처리","2건","Key 중지 권고"],
-        countLabel:"탐지 이벤트",
-        columns:["탐지 시간","Application","탐지 정보","위험도","처리 결과","후속 조치"],
-        rows:[
-          ["2026-06-24 14:01","Sales Insight Bot","전화번호, 고객명","높음","요청 차단","담당자 통보"],
-          ["2026-06-24 13:36","R&D Code Assistant","API Key 패턴","높음","마스킹","Key 회전 권고"],
-          ["2026-06-24 11:24","ERP Help Copilot","주민번호 패턴","긴급","요청 차단","API Key 일시 중지"],
-          ["2026-06-23 18:12","HR FAQ Assistant","인사 대외비 키워드","중간","경고 후 허용","정책 재검토"]
-        ]
-      },
       ops:{
-        label:"운영 상태",
-        title:"LLM Proxy 플랫폼 운영 상태",
-        crumb:"LLM Proxy / 운영 상태",
+        label:"운영 상태 관리",
+        title:"LLM Proxy 운영 상태 관리",
+        crumb:"LLM Proxy / 운영 상태 관리",
         desc:"API 처리량, 응답시간, 오류율, Provider 연결 상태와 장애 전환 결과를 모니터링합니다.",
         metrics:["정상","전체 서비스 상태","182ms","평균 응답시간","0.12%","오류율","2건","Failover 실행"],
         countLabel:"상태 항목",
@@ -495,12 +498,12 @@
       }
     };
     const toast=document.getElementById("toast");
-    let toastTimer,currentProduct="pc",currentView="rules",isEditing=false,formInitialized=false;
+    let toastTimer,currentProduct="rbi",currentView="rules",isEditing=false,formInitialized=false;
     function notify(message){toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),1500)}
     function tagClass(text,fallback){return fallback || (text==="개인정보"?"green":text==="대외비"?"red":text==="비용"?"blue":"teal")}
     function productLabel(){return document.querySelector(`.product-btn[data-product="${currentProduct}"] strong`).textContent}
     function viewLabel(){return currentProduct==="llm"&&llmScreens[currentView]?llmScreens[currentView].label:(currentView==="policies"?"정책":"규정")}
-    function productTagClass(){return currentProduct==="llm"?"blue":currentProduct==="rbi"?"purple":"green"}
+    function productTagClass(){return currentProduct==="llm"?"blue":currentProduct==="rbi"?"purple":currentProduct==="ndr"?"teal":"green"}
     function inferEntryType(){
       if(currentProduct==="pc"){
         const active=document.querySelector(".type-card.active strong")?.textContent || "";
@@ -508,11 +511,15 @@
       }
       if(currentProduct==="llm"){
         if(currentView==="usage") return "비용";
-        if(["audit","leakage"].includes(currentView)) return "개인정보";
+        if(currentView==="audit") return "개인정보";
         const active=document.querySelector(".choice.selected strong")?.textContent || "";
         if(active.includes("비용")) return "비용";
         if(active.includes("민감정보")) return "개인정보";
         return "AI서비스";
+      }
+      if(currentProduct==="ndr"){
+        const active=document.querySelector('input[name="data-type"]:checked')?.parentElement.textContent.trim();
+        return active || "AI서비스";
       }
       return document.querySelector('input[name="data-type"]:checked')?.parentElement.textContent.trim() || "AI서비스";
     }
@@ -547,10 +554,6 @@
           <div class="form-row"><div class="form-label">감사 조건</div><div class="grid-4"><input id="form-name" class="input" value="6월 R&D LLM 감사"><input id="form-scope" class="input" value="R&D 본부"><input class="input" value="2026-06-01 ~ 2026-06-24"><select class="select"><option>전체 Application</option></select></div></div>
           <div class="form-row"><div class="form-label">조회 항목</div><div class="checks"><label class="check"><input type="checkbox" checked>사용자</label><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Provider·모델</label><label class="check"><input type="checkbox" checked>정책 결과</label><label class="check"><input type="checkbox">요청·응답 전문</label></div></div>
           <div class="form-row"><div class="form-label">보고서·조치</div><div class="checks"><label class="check"><input type="checkbox" checked>PDF 보고서 생성</label><label class="check"><input type="checkbox" checked>미승인 모델 사용 조사</label><label class="check"><input type="checkbox" checked>시정 조치 상태 관리</label></div></div>`,
-        leakage:`
-          <div class="form-row"><div class="form-label">대응 이벤트</div><div class="grid-2"><input id="form-name" class="input" value="ERP Help Copilot 주민번호 탐지"><input id="form-scope" class="input" value="ERP / 운영팀"></div></div>
-          <div class="form-row"><div class="form-label">탐지 내용</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">민감정보</div><div class="checks"><label class="check"><input type="checkbox" checked>주민번호</label><label class="check"><input type="checkbox" checked>고객명</label><label class="check"><input type="checkbox">전화번호</label><label class="check"><input type="checkbox">계좌번호</label></div></div><div class="criteria-row"><div class="criteria-title">발생 구간</div><div class="checks"><label class="check"><input type="checkbox" checked>요청 프롬프트</label><label class="check"><input type="checkbox">응답 본문</label><label class="check"><input type="checkbox">첨부 파일</label></div></div></div></div>
-          <div class="form-row"><div class="form-label">후속 조치</div><div class="action-grid"><div class="action-card selected"><strong>API Key 중지</strong><p>위험 Application의 호출을 즉시 중지합니다.</p><span class="tag red">Stop</span></div><div class="action-card selected"><strong>정책 강화</strong><p>주민번호 탐지를 차단 기준으로 승격합니다.</p><span class="tag orange">Policy</span></div><div class="action-card selected"><strong>담당자 통보</strong><p>Application 담당자와 보안 관리자에게 알립니다.</p><span class="tag blue">Notify</span></div><div class="action-card"><strong>예외 검토</strong><p>업무 필요성을 별도 승인합니다.</p><span class="tag purple">Review</span></div></div></div>`,
         ops:`
           <div class="form-row"><div class="form-label">운영 조치 대상</div><div class="grid-2"><input id="form-name" class="input" value="Azure OpenAI Route 지연 대응"><input id="form-scope" class="input" value="Provider Route"></div></div>
           <div class="form-row"><div class="form-label">상태 지표</div><div class="grid-4"><input class="input" value="응답시간 480ms"><input class="input" value="오류율 1.8%"><input class="input" value="처리량 320 rpm"><input class="input" value="영향 Application 4개"></div></div>
@@ -605,6 +608,16 @@
           <div class="form-row"><div class="form-label">연결 규정</div><div class="select-table"><table><tbody><tr><td><strong>Provider 승인 모델 목록</strong><small>승인 모델만 허용</small></td><td><span class="tag blue">AI서비스</span></td><td>승인 요청</td></tr><tr><td><strong>API Key / Token 마스킹</strong><small>Secret 패턴 자동 치환</small></td><td><span class="tag orange">대외비</span></td><td>마스킹</td></tr><tr><td><strong>부서별 LLM API 월 예산</strong><small>예산 90% 알림, 100% 차단</small></td><td><span class="tag blue">비용</span></td><td>한도 관리</td></tr></tbody></table></div></div>
           <div class="form-row"><div class="form-label">배포 방식</div><div class="grid-3"><div class="choice"><strong>즉시 배포</strong><p>대상 전체 바로 적용</p></div><div class="choice selected"><strong>Canary 배포</strong><p>10% 트래픽부터 적용</p></div><div class="choice"><strong>예약 배포</strong><p>업무 영향 낮은 시간 적용</p></div></div></div>`}
           <div class="form-row"><div class="form-label">적용 범위</div><input id="form-scope" class="input" value="${currentView==="rules"?"전사 Application":"R&D 본부 / Dev·Stage"}"></div>`;
+        return;
+      }
+      if(currentProduct==="ndr"){
+        document.getElementById("form-dynamic").innerHTML=commonHead+`
+          <div class="form-row"><div class="form-label">${mode} 이름 <span class="required">*</span></div><input id="form-name" class="input" value="${currentView==="rules"?"미승인 LLM API 직접 호출 탐지":"AI 우회 접속 탐지 정책"}"></div>
+          <div class="form-row"><div class="form-label">설명</div><textarea id="form-desc" class="textarea">외부 AI 서비스 또는 LLM API로 향하는 비정상 네트워크 흐름과 우회 접속 시도를 탐지합니다.</textarea></div>
+          <div class="form-row"><div class="form-label">탐지 유형</div>${radioGroup("AI서비스")}</div>
+          <div class="form-row"><div class="form-label">탐지 조건</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">네트워크 지표</div><div class="checks"><label class="check"><input type="checkbox" checked>미승인 AI 도메인</label><label class="check"><input type="checkbox" checked>직접 LLM API 호출</label><label class="check"><input type="checkbox" checked>프록시 우회</label><label class="check"><input type="checkbox">대량 업로드</label></div></div><div class="criteria-row"><div class="criteria-title">이상행위</div><div class="checks"><label class="check"><input type="checkbox" checked>호출량 급증</label><label class="check"><input type="checkbox" checked>비업무 시간 사용</label><label class="check"><input type="checkbox">신규 Provider 접속</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">적용 범위</div><input id="form-scope" class="input" value="전사 네트워크"></div>
+          <div class="form-row"><div class="form-label">처리 방식</div><div class="action-grid"><div class="action-card selected"><strong>이상행위 탐지</strong><p>NDR 이벤트로 등록하고 상관분석을 수행합니다.</p><span class="tag teal">Detect</span></div><div class="action-card selected"><strong>운영자 알림</strong><p>보안 운영자에게 실시간 알림을 보냅니다.</p><span class="tag blue">Notify</span></div><div class="action-card"><strong>차단 연계</strong><p>Proxy 또는 방화벽 정책으로 차단합니다.</p><span class="tag red">Block</span></div><div class="action-card"><strong>감사 로그</strong><p>AI 거버넌스 감사 증적으로 보관합니다.</p><span class="tag purple">Audit</span></div></div></div>`;
         return;
       }
       if(currentView==="rules"){
@@ -677,8 +690,9 @@
       render();
     }
     document.querySelectorAll(".product-btn").forEach(button=>button.addEventListener("click",()=>{
-      selectProduct(button.dataset.product,"rules");
-      notify(button.querySelector("strong").textContent+" 규정으로 전환했습니다.");
+      const nextView=button.dataset.product==="llm"?"api-requests":"rules";
+      selectProduct(button.dataset.product,nextView);
+      notify(button.querySelector("strong").textContent+" 화면으로 전환했습니다.");
     }));
     document.querySelectorAll(".product-sub").forEach(button=>button.addEventListener("click",()=>{
       selectProduct(button.dataset.product,button.dataset.view);
@@ -730,7 +744,6 @@
           "api-keys":[name,"ak_new_****pending","GPT-4.1 mini","월 $12,000","발급 대기",stamp,"orange"],
           usage:[name,"0","0","$0","신규","한도 설정","blue"],
           audit:[stamp,scope,"전체 Provider","감사 조건 신규","보고서 생성 대기","진행 전","blue"],
-          leakage:[stamp,name,"민감정보 탐지 조건","중간","정책 적용 대기",scope,"orange"],
           ops:[name,"0 rpm","-","-","운영 등록","모니터링 시작","blue"]
         };
         screen.rows.unshift(workflowRows[currentView]||[name,scope,"신규","등록","대기",stamp,"blue"]);

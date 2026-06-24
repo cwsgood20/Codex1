@@ -1,0 +1,755 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI DLP Platform - Product Policy Console</title>
+  <style>
+    :root{
+      --ink:#111827;
+      --muted:#6b7280;
+      --line:#e5eaf0;
+      --page:#f7f9fb;
+      --side:#f4f6f8;
+      --panel:#fff;
+      --blue:#347ff0;
+      --blue-soft:#eaf2ff;
+      --green:#14966c;
+      --green-soft:#e8f8f1;
+      --teal:#16858b;
+      --teal-soft:#e6f6f7;
+      --purple:#6b61d8;
+      --purple-soft:#f0efff;
+      --orange:#d68422;
+      --orange-soft:#fff2df;
+      --red:#d14a55;
+      --red-soft:#fff0f2;
+      --shadow:0 18px 42px rgba(23,37,52,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--ink);background:#fff;font-family:"Pretendard","Noto Sans KR","Malgun Gothic",Arial,sans-serif;letter-spacing:0}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .app{min-height:100vh;background:#fff}
+    .topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;height:52px;padding:0 14px;background:#fff;border-bottom:1px solid var(--line)}
+    .hamburger{display:grid;width:28px;height:28px;place-items:center;border:0;background:transparent;color:#111827;font-size:20px}
+    .brand{display:flex;align-items:center;gap:8px;min-width:178px}
+    .brand-mark{display:grid;width:24px;height:24px;place-items:center;border-radius:5px;color:#fff;background:#4c75ff;font-size:13px;font-weight:900}
+    .brand strong{font-size:17px;font-weight:500;color:#5b6470}
+    .brand small{margin-left:1px;color:#6b7280;font-size:10px;font-weight:900}
+    .top-status{display:flex;align-items:center;gap:8px;margin-left:auto;color:#9aa4b2;font-size:15px}
+    .user-chip{display:grid;width:32px;height:32px;place-items:center;border-radius:50%;color:#ef5c37;background:#fde9e3;border:1px solid #ffd1c4;font-size:12px;font-weight:900}
+    .body{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:calc(100vh - 52px)}
+    .sidebar{background:var(--side);border-right:1px solid #eef2f5;padding:26px 14px 26px 0}
+    .nav-group{margin-bottom:22px}
+    .nav-title{padding:0 16px 9px;color:#9aa4b2;font-size:10px;font-weight:900}
+    .nav-item{display:flex;align-items:center;gap:12px;width:100%;min-height:40px;padding:0 14px 0 17px;border:0;border-radius:0 7px 7px 0;background:transparent;color:#4b5563;text-align:left;font-size:13px;font-weight:800}
+    .nav-item:hover{background:#edf2f6}
+    .nav-item.active{color:#fff;background:var(--blue)}
+    .nav-icon{display:grid;width:18px;height:18px;place-items:center;color:inherit;font-size:14px;font-weight:900}
+    .nav-chevron{margin-left:auto;color:#b5bec8}
+    .sub-nav{display:grid;gap:5px;margin-top:8px;padding-left:30px}
+    .sub-nav button{display:flex;align-items:center;gap:8px;min-height:32px;border:0;background:transparent;color:#697586;text-align:left;font-size:12px}
+    .sub-nav button:before{content:"";width:5px;height:5px;border-radius:50%;background:#b8c1cc}
+    .product-menu{display:grid;gap:8px;padding:0 0 0 14px}
+    .product-section{display:grid;gap:5px}
+    .product-btn{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:62px;padding:9px 10px;border:1px solid transparent;border-radius:8px;background:transparent;color:#4b5563;text-align:left}
+    .product-btn:hover{background:#fff;border-color:#dfe6ed}
+    .product-btn.active{background:#fff;border-color:var(--product);box-shadow:inset 4px 0 0 var(--product)}
+    .product-btn[data-product="pc"]{--product:var(--green)}
+    .product-btn[data-product="llm"]{--product:var(--blue)}
+    .product-btn[data-product="rbi"]{--product:var(--purple)}
+    .product-icon{display:grid;width:30px;height:30px;place-items:center;border-radius:8px;color:#fff;background:var(--product);font-size:11px;font-weight:900}
+    .product-text strong{display:block;font-size:12px;color:#27313f}
+    .product-text span{display:block;margin-top:4px;color:#87919e;font-size:10px;line-height:1.3}
+    .product-count{color:#677483;font-size:11px;font-weight:900}
+    .product-submenu{display:none;gap:4px;margin:0 8px 4px 42px}
+    .product-section.open .product-submenu{display:grid}
+    .product-sub{display:flex;align-items:center;gap:8px;min-height:30px;padding:0 10px;border:0;border-radius:6px;background:transparent;color:#6b7280;text-align:left;font-size:12px;font-weight:800}
+    .product-sub:before{content:"";width:5px;height:5px;border-radius:50%;background:#b7c1cc}
+    .product-sub.active{color:var(--blue);background:#eef5ff}
+    .product-sub.active:before{background:var(--blue)}
+    .content{min-width:0;padding:28px 24px 44px;background:#fff}
+    .page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;margin-bottom:24px}
+    .title-wrap h1{margin:4px 0 0;font-size:25px;line-height:1.25}
+    .title-wrap p{margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.55}
+    .crumb{color:#2f7fe7;font-size:13px;font-weight:900}
+    .actions{display:flex;align-items:center;gap:9px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:0 14px;border:1px solid #d5dde6;border-radius:8px;background:#fff;color:#1f2937;font-size:12px;font-weight:900;white-space:nowrap}
+    .btn.primary{color:#fff;background:var(--blue);border-color:var(--blue)}
+    .btn.disabled{color:#b8c1cc;background:#eef2f6;border-color:#eef2f6}
+    .plus{display:grid;width:18px;height:18px;place-items:center;border:1.6px solid currentColor;border-radius:50%;font-size:15px;line-height:1}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
+    .summary-card{min-height:94px;padding:15px 16px;border:1px solid var(--line);border-radius:9px;background:#fff;box-shadow:0 8px 22px rgba(23,37,52,.04)}
+    .summary-card span{display:block;color:#73808f;font-size:11px;font-weight:900}
+    .summary-card strong{display:block;margin-top:9px;font-size:24px}
+    .summary-card p{margin:7px 0 0;color:#8a95a3;font-size:10px}
+    .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .policy-count{color:#111827;font-size:13px;font-weight:900}
+    .policy-count b{color:var(--blue)}
+    .search{display:flex;align-items:center;gap:8px;width:320px;min-height:40px;margin-left:auto;padding:0 12px;border:1px solid #ccd6e0;border-radius:8px;background:#fff;color:#9aa4b2}
+    .search input{width:100%;border:0;outline:0;color:#111827;font-size:12px}
+    .filter{min-height:40px;padding:0 32px 0 12px;border:1px solid #ccd6e0;border-radius:8px;background:#fff;color:#4b5563;font-size:12px}
+    .table-panel{border-radius:8px;background:#fff;overflow:hidden}
+    table{width:100%;border-collapse:collapse}
+    th{height:42px;padding:0 18px;color:#667487;background:#f5f7f9;text-align:left;font-size:11px;font-weight:500}
+    td{height:52px;padding:8px 18px;border-top:0 solid transparent;font-size:12px;vertical-align:middle}
+    tbody tr:hover{background:#fbfdff}
+    td strong{font-weight:500}
+    .muted{color:#6b7280}
+    .tag{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:12px;font-size:10px;font-weight:900;white-space:nowrap}
+    .tag.green{color:#08764f;background:var(--green-soft)}
+    .tag.blue{color:#1d5ab7;background:var(--blue-soft)}
+    .tag.teal{color:#0d6e73;background:var(--teal-soft)}
+    .tag.purple{color:#5549bd;background:var(--purple-soft)}
+    .tag.orange{color:#99580f;background:var(--orange-soft)}
+    .tag.red{color:#af3340;background:var(--red-soft)}
+    .table-footer{display:flex;align-items:center;justify-content:center;min-height:72px;position:relative}
+    .page-dot{display:grid;width:32px;height:32px;place-items:center;border-radius:50%;color:#fff;background:var(--blue);font-size:13px;font-weight:900}
+    .page-size{position:absolute;right:14px;display:flex;align-items:center;gap:28px;min-width:102px;min-height:34px;padding:0 12px;border:1px solid #ccd6e0;border-radius:8px;color:#111827;font-size:12px}
+    .empty{display:none;min-height:220px;place-items:center;color:#8a95a3;font-size:13px}
+    .list-view.hidden{display:none}
+    .edit-view{display:none}
+    .edit-view.active{display:block}
+    .form-panel{max-width:1040px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+    .form-head{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:58px;padding:0 18px;border-bottom:1px solid var(--line);background:#fbfcfd}
+    .form-head h2{margin:0;font-size:16px}
+    .form-body{padding:6px 20px 20px}
+    .form-row{display:grid;grid-template-columns:190px minmax(0,1fr);gap:18px;align-items:start;padding:16px 0;border-bottom:1px solid #eef2f5}
+    .form-row:last-child{border-bottom:0}
+    .form-label{padding-top:9px;color:#4b5563;font-size:12px;font-weight:900}
+    .form-label small{display:block;margin-top:6px;color:#8a95a3;font-size:10px;font-weight:500;line-height:1.45}
+    .input,.textarea,.select{width:100%;border:1px solid #ccd6e0;border-radius:8px;background:#fff;color:#111827;font-size:12px}
+    .input,.select{min-height:40px;padding:0 12px}
+    .textarea{min-height:88px;padding:11px;resize:vertical}
+    .checks{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center;min-height:40px}
+    .check{display:flex;align-items:center;gap:7px;color:#374151;font-size:12px;font-weight:800;white-space:nowrap}
+    .check input{width:18px;height:18px;accent-color:var(--blue)}
+    .form-actions{display:flex;justify-content:flex-end;gap:8px;padding:16px 20px;border-top:1px solid var(--line);background:#fbfcfd}
+    .required{color:#d14a55}
+    .tag.gray{color:#657181;background:#eef2f6}
+    .grid-2,.grid-3,.grid-4{display:grid;gap:10px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .type-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .type-card,.choice{min-height:78px;padding:13px;border:1px solid #dce5eb;border-radius:8px;background:#fff;text-align:left}
+    .type-card{display:flex;align-items:center;gap:10px}
+    .type-card.active,.choice.selected{border-color:var(--blue);background:var(--blue-soft);box-shadow:inset 0 3px 0 var(--blue)}
+    .type-card strong,.choice strong{display:block;font-size:12px}
+    .type-card span span,.choice p{display:block;margin:6px 0 0;color:#6b7280;font-size:10px;line-height:1.45}
+    .radio-dot{width:18px;height:18px;border:5px solid var(--blue);border-radius:50%;background:#fff;flex:0 0 auto}
+    .dynamic-panel{display:none}
+    .dynamic-panel.active{display:block}
+    .service-card,.criteria,.box,.section-box,.action-card{border:1px solid #dce5eb;border-radius:8px;background:#fff}
+    .service-card{min-height:120px;padding:13px}
+    .service-card strong{font-size:12px}
+    .service-card p{margin:7px 0 10px;color:#6b7280;font-size:10px;line-height:1.45}
+    .criteria{padding:12px;background:#f8fafb}
+    .criteria-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:start;padding:9px 0;border-bottom:1px solid #e8eef3}
+    .criteria-row:last-child{border-bottom:0}
+    .criteria-title{color:#4b5563;font-size:11px;font-weight:900}
+    .box{overflow:hidden}
+    .box-head,.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px;padding:0 12px;border-bottom:1px solid #e8eef3;background:#fbfcfd}
+    .box-head h3,.section-title h3{margin:0;font-size:12px}
+    .box-body{padding:12px}
+    .condition-row{display:grid;grid-template-columns:1fr 90px minmax(0,1.2fr) 34px;gap:8px;align-items:center}
+    .remove-btn{display:grid;width:34px;height:34px;place-items:center;border:0;border-radius:7px;background:#eef2f6;color:#6b7280;font-size:18px}
+    .select-table{overflow:auto}
+    .select-table table{min-width:620px}
+    .select-table input{width:18px;height:18px;accent-color:var(--blue)}
+    .action-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .action-card{min-height:124px;padding:13px}
+    .action-card.selected{border-color:var(--green);box-shadow:inset 0 3px 0 var(--green)}
+    .action-card strong{font-size:12px}
+    .action-card p{margin:7px 0 10px;color:#6b7280;font-size:10px;line-height:1.45}
+    .rbi-form{padding:0;background:#fff}
+    .rbi-section{border-top:1px solid #dfe5eb;margin-top:18px}
+    .rbi-section:first-child{margin-top:0;border-top:0}
+    .rbi-section-bar{display:flex;align-items:center;gap:8px;height:28px;padding:0 10px;background:#e9edf2;color:#111827;font-size:12px;font-weight:900}
+    .rbi-section-bar:before{content:"⌃";font-size:12px;color:#374151}
+    .done-badge{display:inline-flex;align-items:center;min-height:18px;padding:0 6px;border-radius:4px;color:#07965f;background:#dff7eb;font-size:10px;font-weight:900}
+    .rbi-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start;padding:16px 14px;border-bottom:1px solid #edf1f5}
+    .rbi-row:last-child{border-bottom:0}
+    .rbi-label{padding-top:8px;color:#475569;font-size:12px;font-weight:900}
+    .rbi-label small{display:block;margin-top:6px;color:#7b8794;font-size:10px;font-weight:500;line-height:1.45}
+    .rbi-checks{display:flex;gap:12px 20px;flex-wrap:wrap;align-items:center;min-height:36px}
+    .rbi-check{display:flex;align-items:center;gap:7px;color:#1f2937;font-size:12px;font-weight:800;white-space:nowrap}
+    .rbi-check input{width:16px;height:16px;accent-color:var(--blue)}
+    .rbi-selected{border-radius:8px;background:#f5f7f9;overflow:hidden}
+    .rbi-selected-head{height:32px;padding:8px 12px;background:#e9edf2;color:#374151;font-size:11px;font-weight:900}
+    .rbi-selected-row{display:flex;align-items:center;gap:10px;min-height:32px;padding:0 12px;border-top:1px solid #dfe5eb;font-size:11px}
+    .rbi-user-box{min-height:154px;border:1px solid #ccd6e0;border-radius:7px;background:#fff;overflow:hidden}
+    .rbi-user-search{height:36px;padding:0 12px;border-bottom:1px solid #e6ebf0;color:#a0a8b2;font-size:12px}
+    .rbi-user-card{display:flex;align-items:center;gap:10px;padding:14px}
+    .rbi-avatar{display:grid;width:26px;height:26px;place-items:center;border-radius:50%;background:#bff4ec;color:#07847b;font-size:10px;font-weight:900}
+    .rbi-message{width:100%;min-height:42px;padding:10px 12px;border:1px solid #ccd6e0;border-radius:7px;font-size:12px}
+    .toast{position:fixed;right:24px;bottom:24px;z-index:80;display:none;padding:13px 16px;border-radius:8px;background:#172133;color:#fff;font-size:12px;box-shadow:var(--shadow)}
+    .toast.show{display:block}
+    @media(max-width:1120px){
+      .body{grid-template-columns:78px minmax(0,1fr)}
+      .sidebar{padding-right:8px}
+      .nav-title,.nav-item span:not(.nav-icon),.nav-chevron,.sub-nav,.product-text,.product-count,.product-submenu{display:none}
+      .nav-item{justify-content:center;padding:0 0 0 8px}
+      .product-menu{padding-left:8px}
+      .product-btn{grid-template-columns:32px;justify-content:center;padding:9px}
+      .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:760px){
+      .body{display:block}
+      .sidebar{position:static;display:flex;gap:10px;overflow:auto;padding:10px;border-right:0;border-bottom:1px solid var(--line)}
+      .nav-group{display:none}
+      .product-menu{display:flex;padding:0}
+      .product-section{min-width:158px}
+      .product-btn{min-width:158px;grid-template-columns:32px minmax(0,1fr)}
+      .product-text{display:block}
+      .product-section.open .product-submenu{display:grid;margin:4px 0 0 0}
+      .content{padding:18px 12px 32px}
+      .page-head{display:block}
+      .actions{margin-top:14px}
+      .summary-grid{grid-template-columns:1fr}
+      .toolbar{align-items:stretch;flex-direction:column}
+      .search{width:100%;margin-left:0}
+      .table-panel{overflow-x:auto}
+      table{min-width:820px}
+      .form-row{grid-template-columns:1fr}
+      .form-label{padding-top:0}
+      .grid-2,.grid-3,.grid-4,.type-cards,.action-grid{grid-template-columns:1fr}
+      .criteria-row{grid-template-columns:1fr}
+      .condition-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <button class="hamburger" title="메뉴">☰</button>
+      <div class="brand"><span class="brand-mark">AI</span><strong>AI-R</strong><small>DLP</small></div>
+      <div class="top-status"><span title="언어">◎</span><span class="user-chip">리자</span></div>
+    </header>
+
+    <div class="body">
+      <aside class="sidebar">
+        <div class="nav-group">
+          <button class="nav-item"><span class="nav-icon">⌂</span><span>홈</span></button>
+          <button class="nav-item active"><span class="nav-icon">▤</span><span>전사 규정</span></button>
+          <button class="nav-item"><span class="nav-icon">▣</span><span>전사 정책관리</span></button>
+          <button class="nav-item"><span class="nav-icon">▥</span><span>로그</span><span class="nav-chevron">⌄</span></button>
+          <div class="sub-nav"><button>전체</button><button>이상 행위</button></div>
+          <button class="nav-item"><span class="nav-icon">⚙</span><span>설정</span></button>
+        </div>
+
+        <div class="nav-title">제품별 정책관리</div>
+        <div class="product-menu" aria-label="제품별 정책관리">
+          <div class="product-section open" data-section="pc">
+            <button class="product-btn active" data-product="pc"><span class="product-icon">PC</span><span class="product-text"><strong>PC Proxy</strong><span>단말·Agent·도구</span></span><span class="product-count">12</span></button>
+            <div class="product-submenu">
+              <button class="product-sub active" data-product="pc" data-view="rules">규정</button>
+              <button class="product-sub" data-product="pc" data-view="policies">정책 관리</button>
+            </div>
+          </div>
+          <div class="product-section" data-section="llm">
+            <button class="product-btn" data-product="llm"><span class="product-icon">LLM</span><span class="product-text"><strong>LLM Proxy</strong><span>API·비용·Provider</span></span><span class="product-count">10</span></button>
+            <div class="product-submenu">
+              <button class="product-sub" data-product="llm" data-view="rules">규정</button>
+              <button class="product-sub" data-product="llm" data-view="policies">정책 관리</button>
+              <button class="product-sub" data-product="llm" data-view="api-requests">API 사용 신청</button>
+              <button class="product-sub" data-product="llm" data-view="approvals">신청 승인</button>
+              <button class="product-sub" data-product="llm" data-view="connections">Provider 연결</button>
+              <button class="product-sub" data-product="llm" data-view="api-keys">통합 API Key</button>
+              <button class="product-sub" data-product="llm" data-view="usage">사용량·비용</button>
+              <button class="product-sub" data-product="llm" data-view="audit">사용 감사</button>
+              <button class="product-sub" data-product="llm" data-view="leakage">유출 모니터링</button>
+              <button class="product-sub" data-product="llm" data-view="ops">운영 상태</button>
+            </div>
+          </div>
+          <div class="product-section" data-section="rbi">
+            <button class="product-btn" data-product="rbi"><span class="product-icon">RBI</span><span class="product-text"><strong>AI-R RBI</strong><span>원격 격리</span></span><span class="product-count">6</span></button>
+            <div class="product-submenu">
+              <button class="product-sub" data-product="rbi" data-view="rules">규정</button>
+              <button class="product-sub" data-product="rbi" data-view="policies">정책 관리</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="page-head">
+          <div class="title-wrap">
+            <div class="crumb" id="product-crumb">PC Proxy / 정책관리</div>
+            <h1 id="product-title">PC Proxy 규정</h1>
+            <p id="product-desc">단말에 설치된 AI Agent, 브라우저, MCP·플러그인 도구 접근을 통제하는 정책을 관리합니다.</p>
+          </div>
+          <div class="actions">
+            <button id="add-button" class="btn primary"><span class="plus">+</span> 추가</button>
+            <button class="btn disabled">삭제</button>
+          </div>
+        </div>
+
+        <div id="list-view" class="list-view">
+          <section class="summary-grid" aria-label="제품 정책 요약">
+            <article class="summary-card"><span id="metric-rules-label">활성 규정</span><strong id="metric-rules">12</strong><p id="metric-rules-desc">PC Proxy 전용 8개, 공통 4개</p></article>
+            <article class="summary-card"><span>적용 범위</span><strong id="metric-coverage">4,812</strong><p id="metric-coverage-desc">관리 단말 기준</p></article>
+            <article class="summary-card"><span>검토 필요</span><strong id="metric-review">7</strong><p id="metric-review-desc">미승인 Agent·도구 접근</p></article>
+            <article class="summary-card"><span>마지막 배포</span><strong id="metric-deploy">09:06</strong><p id="metric-deploy-desc">2026-06-18 배포 완료</p></article>
+          </section>
+
+          <div class="toolbar">
+            <div class="policy-count"><b id="row-count">12개</b> <span id="view-label">규정</span></div>
+            <select id="type-filter" class="filter" aria-label="데이터 유형 필터">
+              <option value="all">모든 데이터 유형</option>
+              <option value="개인정보">개인정보</option>
+              <option value="대외비">대외비</option>
+              <option value="AI서비스">AI서비스</option>
+              <option value="비용">비용</option>
+            </select>
+            <label class="search"><span>⌕</span><input id="search-input" placeholder="규정 이름 입력"></label>
+          </div>
+
+          <section class="table-panel">
+            <table>
+              <thead id="table-head"><tr><th>규정 이름</th><th>데이터 유형</th><th>적용 범위</th><th>처리 방식</th><th>마지막 업데이트 ↓</th></tr></thead>
+              <tbody id="policy-body"></tbody>
+            </table>
+            <div id="empty" class="empty">조건에 맞는 규정이 없습니다.</div>
+            <div class="table-footer"><span class="page-dot">1</span><span class="page-size">10개 ⌄</span></div>
+          </section>
+        </div>
+
+        <section id="edit-view" class="edit-view">
+          <div class="form-panel">
+            <div class="form-head"><h2 id="form-title">PC Proxy 규정 추가</h2><span id="form-chip" class="tag green">PC Proxy</span></div>
+            <div id="form-dynamic" class="form-body"></div>
+            <div class="form-actions"><button id="cancel-form" class="btn">취소</button><button id="save-form" class="btn primary">저장</button></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script>
+    const products={
+      pc:{
+        title:"PC Proxy 규정",
+        crumb:"PC Proxy / 정책관리",
+        desc:"단말에 설치된 AI Agent, 브라우저, MCP·플러그인 도구 접근을 통제하는 정책을 관리합니다.",
+        metrics:["12","PC Proxy 전용 8개, 공통 4개","4,812","관리 단말 기준","7","미승인 Agent·도구 접근","09:06","2026-06-18 배포 완료"],
+        rows:[
+          ["Agent 외부 도구 접근 승인제","AI서비스","R&D / 개발자","승인 요청","2026-06-18 09:06","green"],
+          ["Codex 로컬 파일 접근 제한","대외비","개발 조직","차단","2026-06-12 16:20","green"],
+          ["MCP 플러그인 허용 목록","AI서비스","전사","허용 목록","2026-06-11 14:08","teal"],
+          ["개인 계정 ChatGPT 직접 접속 차단","AI서비스","전사","차단","2026-06-09 11:42","red"],
+          ["Restricted 문서 AI 전송 차단","대외비","재무 / R&D","차단","2026-06-05 10:31","red"],
+          ["소스코드 Secret 마스킹","대외비","개발 조직","마스킹","2026-06-02 18:22","orange"]
+        ]
+      },
+      llm:{
+        title:"LLM Proxy 규정",
+        crumb:"LLM Proxy / 정책관리",
+        desc:"내부 시스템의 외부 LLM API 사용 권한, Provider, 모델, 비용, 민감정보 전송 정책을 관리합니다.",
+        metrics:["10","API 전용 7개, 공통 3개","1.28M","오늘 API 호출 기준","4","비용·민감정보 검토","18:09","2026-06-20 배포 완료"],
+        rows:[
+          ["부서별 LLM API 월 예산","비용","마케팅 / 영업","한도 초과 차단","2026-06-20 18:09","blue"],
+          ["Provider 승인 모델 목록","AI서비스","전사","허용 목록","2026-06-19 13:11","blue"],
+          ["ERP 고객정보 API 전송 차단","개인정보","설치형 ERP","차단","2026-06-18 09:20","red"],
+          ["API Key / Token 마스킹","대외비","전체 Application","마스킹","2026-06-16 17:44","orange"],
+          ["미승인 LLM 직접 호출 차단","AI서비스","전사","차단","2026-06-12 10:18","red"],
+          ["Claude 비용 임계치 경고","비용","Sales Insight Bot","경고","2026-06-08 16:33","blue"]
+        ]
+      },
+      rbi:{
+        title:"AI-R RBI 규정",
+        crumb:"AI-R RBI / 정책관리",
+        desc:"외부 AI 웹 서비스를 원격 격리 환경으로 연결하고 업로드·다운로드·클립보드 유출을 통제합니다.",
+        metrics:["6","격리 세션 전용","8,906","오늘 격리 세션","5","업로드 차단 검토","10:21","2026-06-14 배포 완료"],
+        rows:[
+          ["외부 AI 웹 격리 접속 강제","AI서비스","전사","RBI 연결","2026-06-14 10:21","purple"],
+          ["파일 업로드 금지 정책","대외비","재무 / 인사","차단","2026-06-13 18:17","red"],
+          ["클립보드 복사 제한","대외비","전사","경고 후 차단","2026-06-12 09:09","orange"],
+          ["다운로드 파일 검사","대외비","전사","검사 후 허용","2026-06-10 17:02","purple"],
+          ["개인 AI 계정 접속 차단","AI서비스","일반 사용자","차단","2026-06-08 12:40","red"]
+        ]
+      }
+    };
+    const llmScreens={
+      "api-requests":{
+        label:"API 사용 신청",
+        title:"LLM Proxy API 사용 신청",
+        crumb:"LLM Proxy / API 사용 신청",
+        desc:"Application에서 외부 LLM API를 사용하기 위한 권한, 모델, 예상 사용량과 비용을 신청합니다.",
+        metrics:["18","접수 6건, 검토 중 8건","12","승인 대기 Application","$42K","월 예상 비용 합계","14:22","최근 신청 접수"],
+        countLabel:"신청",
+        columns:["신청 Application","Provider·모델","처리 데이터","예상 사용량","상태","신청일"],
+        rows:[
+          ["R&D Code Assistant","OpenAI / GPT-4.1 mini","소스코드, 기술문서","월 850K tokens","보안 검토 중","2026-06-24 14:22","blue"],
+          ["Sales Insight Bot","Anthropic / Claude Sonnet","고객 상담 요약","월 1.2M tokens","개발관리자 검토","2026-06-24 11:08","orange"],
+          ["HR FAQ Assistant","Azure OpenAI / GPT-4o mini","HR FAQ, 사내 규정","월 220K tokens","보완 요청","2026-06-23 17:41","red"],
+          ["ERP Help Copilot","OpenAI / GPT-4.1 mini","ERP 화면 설명","월 430K tokens","승인 완료","2026-06-22 09:33","green"]
+        ]
+      },
+      approvals:{
+        label:"신청 승인",
+        title:"LLM Proxy API 사용 신청 승인",
+        crumb:"LLM Proxy / 신청 승인",
+        desc:"업무 필요성, 비용 한도, 데이터 위험과 적용 보안 정책을 검토하여 API 사용을 승인합니다.",
+        metrics:["12","승인 대기 7건","5","보안 검토 필요","$18K","이번 주 승인 예산","2건","반려·보완 요청"],
+        countLabel:"승인 건",
+        columns:["신청명","업무 목적","월 예산","보안 위험","처리 상태","담당자"],
+        rows:[
+          ["Sales Insight Bot API","영업 리드 요약 자동화","$8,000","개인정보 포함 가능","개발관리자 승인 대기","김개발"],
+          ["R&D Code Assistant","코드 리뷰와 테스트 생성","$12,000","Secret 탐지 필요","AI 보안 검토","박보안"],
+          ["Finance Report Helper","월말 보고서 초안 작성","$3,500","재무 대외비 포함","보완 요청","정재무"],
+          ["ERP Help Copilot","ERP 업무 질의 응답","$5,000","낮음","승인 완료","이운영"]
+        ]
+      },
+      connections:{
+        label:"Provider 연결",
+        title:"LLM Proxy Provider 연결 환경",
+        crumb:"LLM Proxy / Provider 연결",
+        desc:"승인된 Provider 계정, 인증정보, 라우팅, 장애 전환과 연결 테스트 상태를 관리합니다.",
+        metrics:["7","등록 Provider·모델","99.97%","오늘 성공률","2","Failover 대상","정상","비밀 저장소 상태"],
+        countLabel:"연결",
+        columns:["Provider","모델","인증정보","라우팅 경로","상태","마지막 테스트"],
+        rows:[
+          ["OpenAI Enterprise","GPT-4.1 mini","Vault: openai-prod-01","/v1/chat/completions","정상","2026-06-24 13:58"],
+          ["Anthropic Team","Claude Sonnet","Vault: anthropic-rnd","/v1/messages","정상","2026-06-24 13:55"],
+          ["Azure OpenAI","GPT-4o mini","Vault: azure-eastus","/openai/deployments","지연 감지","2026-06-24 13:42"],
+          ["Google Vertex AI","Gemini Pro","Vault: vertex-ai-01","/v1beta/models","대기","2026-06-23 18:20"]
+        ]
+      },
+      "api-keys":{
+        label:"통합 API Key",
+        title:"LLM Proxy 통합 API Key",
+        crumb:"LLM Proxy / 통합 API Key",
+        desc:"Application이 Provider 차이 없이 단일 API로 호출할 수 있도록 플랫폼 API Key와 권한을 관리합니다.",
+        metrics:["42","활성 플랫폼 Key","1.28M","오늘 통합 API 호출","3","중지된 Key","6개","권한 변경 대기"],
+        countLabel:"API Key",
+        columns:["Application","플랫폼 API Key","허용 모델","한도","상태","최근 호출"],
+        rows:[
+          ["R&D Code Assistant","ak_live_rnd_****7421","GPT-4.1 mini, Claude Sonnet","월 $12,000","활성","2026-06-24 14:15"],
+          ["Sales Insight Bot","ak_live_sales_****1930","Claude Sonnet","월 $8,000","활성","2026-06-24 14:10"],
+          ["HR FAQ Assistant","ak_stage_hr_****8812","GPT-4o mini","월 $1,500","보류","2026-06-24 10:02"],
+          ["Legacy ERP Bot","ak_live_erp_****5510","GPT-4.1 mini","월 $4,000","중지","2026-06-21 16:45"]
+        ]
+      },
+      usage:{
+        label:"사용량·비용",
+        title:"LLM Proxy API 사용량·비용 관리",
+        crumb:"LLM Proxy / 사용량·비용",
+        desc:"조직과 Application별 호출량, 토큰, 비용을 예산과 비교하고 한도 초과 조치를 수행합니다.",
+        metrics:["1.28M","오늘 API 호출","$31.4K","이번 달 비용","84%","최고 예산 사용률","4건","한도 임계치 경고"],
+        countLabel:"Application",
+        columns:["조직 / Application","호출량","토큰 사용량","월 비용","예산 사용률","조치"],
+        rows:[
+          ["R&D / Code Assistant","412K","18.2M","$10,080","84%","90% 도달 시 승인 요청"],
+          ["Sales / Insight Bot","366K","13.1M","$7,220","72%","정상"],
+          ["ERP / Help Copilot","188K","6.9M","$3,140","63%","정상"],
+          ["HR / FAQ Assistant","52K","1.4M","$620","41%","정상"]
+        ]
+      },
+      audit:{
+        label:"사용 감사",
+        title:"LLM Proxy AI API 사용 감사",
+        crumb:"LLM Proxy / 사용 감사",
+        desc:"사용자, API Key, Provider, 모델별 호출 이력과 보안 정책 적용 결과를 추적합니다.",
+        metrics:["92K","감사 대상 호출","18","정책 위반","6","미승인 모델 시도","3건","시정 조치 진행"],
+        countLabel:"감사 이벤트",
+        columns:["시간","사용자 / Key","Provider·모델","적용 정책","감사 결과","조치 상태"],
+        rows:[
+          ["2026-06-24 13:50","rnd-dev-21 / ak_live_rnd","OpenAI / GPT-4.1 mini","Secret 마스킹","정상 처리","완료"],
+          ["2026-06-24 12:44","sales-app / ak_live_sales","Anthropic / Claude Sonnet","고객정보 차단","정책 위반","담당자 통보"],
+          ["2026-06-24 10:21","unknown-key","OpenAI / 미승인 모델","허용 모델 목록","우회 시도","조사 중"],
+          ["2026-06-23 17:10","erp-help / ak_live_erp","OpenAI / GPT-4.1 mini","요청 로깅","정상 처리","완료"]
+        ]
+      },
+      leakage:{
+        label:"유출 모니터링",
+        title:"LLM Proxy 정보 유출 모니터링",
+        crumb:"LLM Proxy / 유출 모니터링",
+        desc:"프롬프트와 응답에서 개인정보·기밀정보 유출을 탐지하고 마스킹, 차단, Key 중지 조치를 수행합니다.",
+        metrics:["37","오늘 탐지 이벤트","11","요청 차단","24","마스킹 처리","2건","Key 중지 권고"],
+        countLabel:"탐지 이벤트",
+        columns:["탐지 시간","Application","탐지 정보","위험도","처리 결과","후속 조치"],
+        rows:[
+          ["2026-06-24 14:01","Sales Insight Bot","전화번호, 고객명","높음","요청 차단","담당자 통보"],
+          ["2026-06-24 13:36","R&D Code Assistant","API Key 패턴","높음","마스킹","Key 회전 권고"],
+          ["2026-06-24 11:24","ERP Help Copilot","주민번호 패턴","긴급","요청 차단","API Key 일시 중지"],
+          ["2026-06-23 18:12","HR FAQ Assistant","인사 대외비 키워드","중간","경고 후 허용","정책 재검토"]
+        ]
+      },
+      ops:{
+        label:"운영 상태",
+        title:"LLM Proxy 플랫폼 운영 상태",
+        crumb:"LLM Proxy / 운영 상태",
+        desc:"API 처리량, 응답시간, 오류율, Provider 연결 상태와 장애 전환 결과를 모니터링합니다.",
+        metrics:["정상","전체 서비스 상태","182ms","평균 응답시간","0.12%","오류율","2건","Failover 실행"],
+        countLabel:"상태 항목",
+        columns:["대상","처리량","응답시간","오류율","상태","조치 이력"],
+        rows:[
+          ["LLM Gateway API","2,140 rpm","182ms","0.12%","정상","자동 확장 2회"],
+          ["OpenAI Route","1,180 rpm","168ms","0.08%","정상","없음"],
+          ["Anthropic Route","640 rpm","211ms","0.15%","정상","없음"],
+          ["Azure OpenAI Route","320 rpm","480ms","1.8%","지연","Claude로 일부 전환"]
+        ]
+      }
+    };
+    const toast=document.getElementById("toast");
+    let toastTimer,currentProduct="pc",currentView="rules",isEditing=false,formInitialized=false;
+    function notify(message){toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),1500)}
+    function tagClass(text,fallback){return fallback || (text==="개인정보"?"green":text==="대외비"?"red":text==="비용"?"blue":"teal")}
+    function productLabel(){return document.querySelector(`.product-btn[data-product="${currentProduct}"] strong`).textContent}
+    function viewLabel(){return currentProduct==="llm"&&llmScreens[currentView]?llmScreens[currentView].label:(currentView==="policies"?"정책":"규정")}
+    function productTagClass(){return currentProduct==="llm"?"blue":currentProduct==="rbi"?"purple":"green"}
+    function inferEntryType(){
+      if(currentProduct==="pc"){
+        const active=document.querySelector(".type-card.active strong")?.textContent || "";
+        return active.includes("민감정보") ? "개인정보" : "AI서비스";
+      }
+      if(currentProduct==="llm"){
+        if(currentView==="usage") return "비용";
+        if(["audit","leakage"].includes(currentView)) return "개인정보";
+        const active=document.querySelector(".choice.selected strong")?.textContent || "";
+        if(active.includes("비용")) return "비용";
+        if(active.includes("민감정보")) return "개인정보";
+        return "AI서비스";
+      }
+      return document.querySelector('input[name="data-type"]:checked')?.parentElement.textContent.trim() || "AI서비스";
+    }
+    function radioGroup(selected="AI서비스"){
+      return `<div class="checks"><label class="check"><input type="radio" name="data-type" ${selected==="AI서비스"?"checked":""}> AI서비스</label><label class="check"><input type="radio" name="data-type" ${selected==="개인정보"?"checked":""}> 개인정보</label><label class="check"><input type="radio" name="data-type" ${selected==="대외비"?"checked":""}> 대외비</label><label class="check"><input type="radio" name="data-type" ${selected==="비용"?"checked":""}> 비용</label></div>`;
+    }
+    function renderLlmWorkflowForm(commonHead,screen){
+      const templates={
+        "api-requests":`
+          <div class="form-row"><div class="form-label">Application 정보 <span class="required">*</span></div><div class="grid-2"><input id="form-name" class="input" value="R&D Code Assistant"><input id="form-scope" class="input" value="R&D 본부 / 개발팀"></div></div>
+          <div class="form-row"><div class="form-label">사용 목적</div><textarea id="form-desc" class="textarea">코드 리뷰, 테스트 케이스 생성, 보안 취약점 설명을 위해 LLM API를 사용합니다.</textarea></div>
+          <div class="form-row"><div class="form-label">LLM 기능·모델</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">기능</div><div class="checks"><label class="check"><input type="checkbox" checked>채팅</label><label class="check"><input type="checkbox" checked>코드 생성</label><label class="check"><input type="checkbox">요약</label><label class="check"><input type="checkbox">임베딩</label></div></div><div class="criteria-row"><div class="criteria-title">Provider·모델</div><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI / GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Anthropic / Claude Sonnet</label><label class="check"><input type="checkbox">Azure OpenAI</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">처리 데이터</div><div class="checks"><label class="check"><input type="checkbox" checked>소스코드</label><label class="check"><input type="checkbox" checked>기술문서</label><label class="check"><input type="checkbox">개인정보 포함 가능</label><label class="check"><input type="checkbox" checked>Secret 탐지 필요</label></div></div>
+          <div class="form-row"><div class="form-label">예상 사용량·기간</div><div class="grid-4"><input class="input" value="월 850K tokens"><input class="input" value="월 $12,000"><input class="input" value="2026-07-01 ~ 2026-12-31"><select class="select"><option>Dev / Stage</option><option>Prod</option></select></div></div>`,
+        approvals:`
+          <div class="form-row"><div class="form-label">승인 대상 신청</div><div><input id="form-name" class="input" value="Sales Insight Bot API 사용 신청"><div class="criteria" style="margin-top:10px"><div class="criteria-row"><div class="criteria-title">업무 목적</div><div>영업 리드와 상담 내용을 요약하여 영업 활동 우선순위를 제안합니다.</div></div><div class="criteria-row"><div class="criteria-title">예상 호출량</div><div>월 1.2M tokens / 월 $8,000</div></div></div></div></div>
+          <div class="form-row"><div class="form-label">승인 조건</div><div class="grid-4"><input id="form-scope" class="input" value="Sales 본부"><input class="input" value="월 예산 $8,000"><input class="input" value="일 호출 50,000건"><input class="input" value="2026-12-31까지"></div></div>
+          <div class="form-row"><div class="form-label">보안 검토</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">적용 정책</div><div class="checks"><label class="check"><input type="checkbox" checked>고객정보 차단</label><label class="check"><input type="checkbox" checked>요청·응답 로깅</label><label class="check"><input type="checkbox" checked>허용 모델 제한</label></div></div><div class="criteria-row"><div class="criteria-title">승인 처리</div><div class="checks"><label class="check"><input type="checkbox" checked>승인</label><label class="check"><input type="checkbox">보완 요청</label><label class="check"><input type="checkbox">반려</label></div></div></div></div>`,
+        connections:`
+          <div class="form-row"><div class="form-label">Provider 계정</div><div class="grid-3"><input id="form-name" class="input" value="OpenAI Enterprise"><input id="form-scope" class="input" value="전사 Application"><input class="input" value="계약: Enterprise Plan"></div></div>
+          <div class="form-row"><div class="form-label">비밀 저장소</div><div class="grid-3"><input class="input" value="Vault Path: openai-prod-01"><select class="select"><option>API Key 자동 회전</option></select><select class="select"><option>운영자만 조회</option></select></div></div>
+          <div class="form-row"><div class="form-label">연결·라우팅</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">모델 연결</div><div class="checks"><label class="check"><input type="checkbox" checked>GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>GPT-4o mini</label><label class="check"><input type="checkbox">Embedding</label></div></div><div class="criteria-row"><div class="criteria-title">장애 전환</div><div class="checks"><label class="check"><input type="checkbox" checked>Claude Sonnet으로 전환</label><label class="check"><input type="checkbox" checked>30초 Timeout</label><label class="check"><input type="checkbox" checked>연결 테스트 수행</label></div></div></div></div>`,
+        "api-keys":`
+          <div class="form-row"><div class="form-label">Key 발급 대상</div><div class="grid-3"><input id="form-name" class="input" value="R&D Code Assistant"><input id="form-scope" class="input" value="R&D 본부"><select class="select"><option>Production</option><option>Stage</option></select></div></div>
+          <div class="form-row"><div class="form-label">권한 범위</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">허용 모델</div><div class="checks"><label class="check"><input type="checkbox" checked>GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Claude Sonnet</label><label class="check"><input type="checkbox">Gemini Pro</label></div></div><div class="criteria-row"><div class="criteria-title">보안 검사</div><div class="checks"><label class="check"><input type="checkbox" checked>API Key 권한 확인</label><label class="check"><input type="checkbox" checked>사용 한도 검사</label><label class="check"><input type="checkbox" checked>민감정보 정책 적용</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">한도</div><div class="grid-3"><input class="input" value="월 $12,000"><input class="input" value="일 호출 80,000건"><input class="input" value="분당 2,000 TPM"></div></div>`,
+        usage:`
+          <div class="form-row"><div class="form-label">한도 조정 대상</div><div class="grid-2"><input id="form-name" class="input" value="R&D / Code Assistant"><input id="form-scope" class="input" value="R&D 본부"></div></div>
+          <div class="form-row"><div class="form-label">현재 사용량</div><div class="grid-4"><input class="input" value="월 비용 $10,080"><input class="input" value="예산 사용률 84%"><input class="input" value="호출 412K"><input class="input" value="토큰 18.2M"></div></div>
+          <div class="form-row"><div class="form-label">조정 항목</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">예산·호출 한도</div><div class="checks"><label class="check"><input type="checkbox" checked>월 예산 $15,000으로 증액</label><label class="check"><input type="checkbox" checked>일 호출 120,000건</label><label class="check"><input type="checkbox">저비용 모델 우선</label></div></div><div class="criteria-row"><div class="criteria-title">초과 시 조치</div><div class="checks"><label class="check"><input type="checkbox" checked>알림</label><label class="check"><input type="checkbox" checked>호출 제한</label><label class="check"><input type="checkbox">Key 중지</label></div></div></div></div>`,
+        audit:`
+          <div class="form-row"><div class="form-label">감사 조건</div><div class="grid-4"><input id="form-name" class="input" value="6월 R&D LLM 감사"><input id="form-scope" class="input" value="R&D 본부"><input class="input" value="2026-06-01 ~ 2026-06-24"><select class="select"><option>전체 Application</option></select></div></div>
+          <div class="form-row"><div class="form-label">조회 항목</div><div class="checks"><label class="check"><input type="checkbox" checked>사용자</label><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Provider·모델</label><label class="check"><input type="checkbox" checked>정책 결과</label><label class="check"><input type="checkbox">요청·응답 전문</label></div></div>
+          <div class="form-row"><div class="form-label">보고서·조치</div><div class="checks"><label class="check"><input type="checkbox" checked>PDF 보고서 생성</label><label class="check"><input type="checkbox" checked>미승인 모델 사용 조사</label><label class="check"><input type="checkbox" checked>시정 조치 상태 관리</label></div></div>`,
+        leakage:`
+          <div class="form-row"><div class="form-label">대응 이벤트</div><div class="grid-2"><input id="form-name" class="input" value="ERP Help Copilot 주민번호 탐지"><input id="form-scope" class="input" value="ERP / 운영팀"></div></div>
+          <div class="form-row"><div class="form-label">탐지 내용</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">민감정보</div><div class="checks"><label class="check"><input type="checkbox" checked>주민번호</label><label class="check"><input type="checkbox" checked>고객명</label><label class="check"><input type="checkbox">전화번호</label><label class="check"><input type="checkbox">계좌번호</label></div></div><div class="criteria-row"><div class="criteria-title">발생 구간</div><div class="checks"><label class="check"><input type="checkbox" checked>요청 프롬프트</label><label class="check"><input type="checkbox">응답 본문</label><label class="check"><input type="checkbox">첨부 파일</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">후속 조치</div><div class="action-grid"><div class="action-card selected"><strong>API Key 중지</strong><p>위험 Application의 호출을 즉시 중지합니다.</p><span class="tag red">Stop</span></div><div class="action-card selected"><strong>정책 강화</strong><p>주민번호 탐지를 차단 기준으로 승격합니다.</p><span class="tag orange">Policy</span></div><div class="action-card selected"><strong>담당자 통보</strong><p>Application 담당자와 보안 관리자에게 알립니다.</p><span class="tag blue">Notify</span></div><div class="action-card"><strong>예외 검토</strong><p>업무 필요성을 별도 승인합니다.</p><span class="tag purple">Review</span></div></div></div>`,
+        ops:`
+          <div class="form-row"><div class="form-label">운영 조치 대상</div><div class="grid-2"><input id="form-name" class="input" value="Azure OpenAI Route 지연 대응"><input id="form-scope" class="input" value="Provider Route"></div></div>
+          <div class="form-row"><div class="form-label">상태 지표</div><div class="grid-4"><input class="input" value="응답시간 480ms"><input class="input" value="오류율 1.8%"><input class="input" value="처리량 320 rpm"><input class="input" value="영향 Application 4개"></div></div>
+          <div class="form-row"><div class="form-label">장애 전환</div><div class="checks"><label class="check"><input type="checkbox" checked>Claude Sonnet으로 전환</label><label class="check"><input type="checkbox" checked>OpenAI Route 예비 사용</label><label class="check"><input type="checkbox" checked>복구 후 원인 기록</label><label class="check"><input type="checkbox">사용자 공지</label></div></div>`
+      };
+      document.getElementById("form-dynamic").innerHTML=commonHead+(templates[currentView]||templates["api-requests"]);
+    }
+    function renderEditForm(){
+      const label=productLabel();
+      const mode=viewLabel();
+      const tag=productTagClass();
+      document.getElementById("form-title").textContent=`${label} ${mode} 추가`;
+      document.getElementById("form-chip").textContent=label;
+      document.getElementById("form-chip").className=`tag ${tag}`;
+      const commonHead=`<div class="form-row"><div class="form-label">기본 정보 <small>참고 제품 목업의 작성 흐름을 플랫폼에 연결했습니다.</small></div><div class="checks"><span class="tag ${tag}">${label}</span><span class="tag blue">${mode}</span><span class="tag orange">작성 중</span></div></div>`;
+      if(currentProduct==="pc" && currentView==="rules"){
+        document.getElementById("form-dynamic").innerHTML=commonHead+`
+          <div class="form-row"><div class="form-label">규정 유형 <span class="required">*</span><small>AI 사용 범위 규정과 검사 규정을 분리 관리합니다.</small></div><div class="type-cards"><button class="type-card active" type="button" data-panel="pc-service-fields"><span class="radio-dot"></span><span><strong>AI 서비스와 데이터 사용 규정</strong><span>서비스, 채널, 프롬프트, 첨부파일 통제</span></span></button><button class="type-card" type="button" data-panel="pc-sensitive-fields"><span class="radio-dot"></span><span><strong>민감정보 검사 규정</strong><span>개인정보, 대외비, Secret, DRM/CSO 등급 검사</span></span></button></div></div>
+          <div class="form-row"><div class="form-label">규정 이름 <span class="required">*</span></div><input id="form-name" class="input" value="A-R&D Agent 사용규정"></div>
+          <div class="form-row"><div class="form-label">설명</div><textarea id="form-desc" class="textarea">R&D 조직에서 Codex, Claude Code, Office Copilot 사용 시 프롬프트와 첨부파일 전송 조건을 제한하는 규정</textarea></div>
+          <div id="pc-service-fields" class="dynamic-panel active"><div class="form-row"><div class="form-label">AI 서비스 허용 범위 <small>Web, App, CLI, IDE 채널별 허용 여부</small></div><div class="grid-4"><div class="service-card"><strong>ChatGPT</strong><p>Web/App 사용 제어</p><div class="checks"><label class="check"><input type="checkbox" checked>Web</label><label class="check"><input type="checkbox" checked>App</label></div></div><div class="service-card"><strong>Claude</strong><p>Web/App/CLI/IDE/Code</p><div class="checks"><label class="check"><input type="checkbox" checked>Web</label><label class="check"><input type="checkbox" checked>IDE</label></div></div><div class="service-card"><strong>Codex</strong><p>App, CLI, IDE</p><div class="checks"><label class="check"><input type="checkbox" checked>App</label><label class="check"><input type="checkbox">CLI</label><label class="check"><input type="checkbox" checked>IDE</label></div></div><div class="service-card"><strong>Copilot</strong><p>Office/Web 사용 제어</p><div class="checks"><label class="check"><input type="checkbox" checked>Office</label><label class="check"><input type="checkbox" checked>Web</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">프롬프트·첨부파일 규정</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">전송 데이터</div><div class="checks"><label class="check"><input type="checkbox" checked>글자수 제한</label><label class="check"><input type="checkbox" checked>이미지/OCR</label><label class="check"><input type="checkbox" checked>Copy & Paste</label><label class="check"><input type="checkbox" checked>소스코드</label></div></div><div class="criteria-row"><div class="criteria-title">첨부파일 조건</div><div class="checks"><label class="check"><input type="checkbox" checked>확장자</label><label class="check"><input type="checkbox" checked>분류라벨</label><label class="check"><input type="checkbox" checked>DRM 등급</label></div></div><div class="criteria-row"><div class="criteria-title">허용 확장자</div><input class="input" value="docx, xlsx, pptx, pdf, txt, md, zip"></div></div></div></div>
+          <div id="pc-sensitive-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">민감정보 검사 기준 <small>AI Agent가 전송하는 프롬프트, 파일, 코드에서 검사할 항목입니다.</small></div><div class="criteria"><div class="criteria-row"><div class="criteria-title">개인정보 패턴</div><div class="checks"><label class="check"><input type="checkbox" checked>주민번호</label><label class="check"><input type="checkbox" checked>전화번호</label><label class="check"><input type="checkbox" checked>이메일</label><label class="check"><input type="checkbox">계좌번호</label><label class="check"><input type="checkbox">카드번호</label></div></div><div class="criteria-row"><div class="criteria-title">문맥 태그</div><div class="checks"><label class="check"><input type="checkbox" checked>이름</label><label class="check"><input type="checkbox" checked>주소</label><label class="check"><input type="checkbox" checked>생일</label><label class="check"><input type="checkbox">상호명</label></div></div><div class="criteria-row"><div class="criteria-title">소스코드/Secret</div><div class="checks"><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Access Token</label><label class="check"><input type="checkbox" checked>Private Key</label><label class="check"><input type="checkbox">DB 접속 문자열</label></div></div></div></div>
+          <div class="form-row"><div class="form-label">검사 대상</div><div class="checks"><label class="check"><input type="checkbox" checked>프롬프트</label><label class="check"><input type="checkbox" checked>첨부파일</label><label class="check"><input type="checkbox" checked>Copy & Paste</label><label class="check"><input type="checkbox" checked>소스코드</label><label class="check"><input type="checkbox">AI 응답</label></div></div></div>
+          <div class="form-row"><div class="form-label">적용 범위</div><input id="form-scope" class="input" value="전사"></div>`;
+        return;
+      }
+      if(currentProduct==="pc" && currentView==="policies"){
+        document.getElementById("form-dynamic").innerHTML=commonHead+`
+          <div class="form-row"><div class="form-label">정책 이름 <span class="required">*</span></div><input id="form-name" class="input" value="R&D AI Agent 보안 정책"></div>
+          <div class="form-row"><div class="form-label">설명</div><textarea id="form-desc" class="textarea">R&D 본부 사용자가 Codex, Claude Code, Office Copilot을 사용할 때 민감정보와 DRM/CSO 문서 전송을 통제하는 정책</textarea></div>
+          <div class="form-row"><div class="form-label">규정 선택</div><div class="grid-2"><div class="section-box"><div class="section-title"><h3>AI 서비스와 데이터 사용 규정</h3><button class="btn" type="button">규정 선택</button></div><div class="select-table"><table><tbody><tr><td><input type="checkbox" checked></td><td><strong>A-R&D Agent 사용규정</strong></td><td class="muted">Codex, Claude Code, Office Copilot 허용</td><td><span class="tag green">사용</span></td></tr></tbody></table></div></div><div class="section-box"><div class="section-title"><h3>민감정보 검사 규정</h3><button class="btn" type="button">규정 선택</button></div><div class="select-table"><table><tbody><tr><td><input type="checkbox" checked></td><td><strong>S-개인정보 검사</strong></td><td class="muted">개인식별정보와 Secret 검사</td><td><span class="tag green">사용</span></td></tr></tbody></table></div></div></div></div>
+          <div class="form-row"><div class="form-label">적용 대상</div><div><input id="form-scope" class="input" value="R&D본부, RBI01 (rbi01)"><div class="criteria" style="margin-top:10px"><div class="criteria-row"><div class="criteria-title">Proxy 조건</div><div class="checks"><label class="check"><input type="checkbox" checked>PC Proxy 설치 필수</label><label class="check"><input type="checkbox" checked>SSO 로그인 필수</label><label class="check"><input type="checkbox" checked>DRM/CSO 연계</label></div></div></div></div></div>
+          <div class="form-row"><div class="form-label">후처리 정책</div><div class="action-grid"><div class="action-card selected"><strong>차단</strong><p>고위험 개인정보와 Restricted DRM 전송 차단</p><span class="tag red">Block</span></div><div class="action-card selected"><strong>경고 후 확인</strong><p>중위험 데이터는 사용자 확인 후 진행</p><span class="tag orange">Warn</span></div><div class="action-card selected"><strong>단순 로깅</strong><p>정상 허용 사용은 감사 로그 저장</p><span class="tag blue">Log</span></div><div class="action-card"><strong>예외 신청</strong><p>업무상 필요 시 승인 프로세스 연결</p><span class="tag purple">Request</span></div></div></div>`;
+        return;
+      }
+      if(currentProduct==="llm" && llmScreens[currentView]){
+        renderLlmWorkflowForm(commonHead,llmScreens[currentView]);
+        return;
+      }
+      if(currentProduct==="llm"){
+        document.getElementById("form-dynamic").innerHTML=commonHead+`
+          <div class="form-row"><div class="form-label">${mode} 이름 <span class="required">*</span></div><input id="form-name" class="input" value="${currentView==="rules"?"Provider 승인 모델 목록":"R&D Code Assistant 보안 정책"}"></div>
+          <div class="form-row"><div class="form-label">설명</div><textarea id="form-desc" class="textarea">${currentView==="rules"?"업무 Application이 승인된 Provider와 모델만 사용하도록 제한하고, 미승인 모델 호출은 승인 요청으로 전환합니다.":"R&D 조직의 LLM API 사용에 승인 모델, Secret 마스킹, 월 예산 한도 규정을 함께 적용합니다."}</textarea></div>
+          ${currentView==="rules"?`
+          <div class="form-row"><div class="form-label">규정 유형</div><div class="grid-4"><div class="choice selected" data-panel="llm-provider-fields"><strong>Provider·모델</strong><p>허용 Provider, 모델, 라우팅 조건 제한</p></div><div class="choice" data-panel="llm-sensitive-fields"><strong>민감정보 탐지</strong><p>요청·응답의 개인정보와 Secret 검사</p></div><div class="choice" data-panel="llm-cost-fields"><strong>비용 한도</strong><p>Application별 예산과 호출량 통제</p></div><div class="choice" data-panel="llm-audit-fields"><strong>감사 로깅</strong><p>요청·응답 저장 범위 지정</p></div></div></div>
+          <div id="llm-provider-fields" class="dynamic-panel active"><div class="form-row"><div class="form-label">판정 조건</div><div class="grid-2"><div class="box"><div class="box-head"><h3>허용 Provider</h3><span class="tag blue">필수</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>OpenAI</label><label class="check"><input type="checkbox" checked>Anthropic</label><label class="check"><input type="checkbox">Google</label><label class="check"><input type="checkbox">Azure OpenAI</label></div></div></div><div class="box"><div class="box-head"><h3>허용 모델</h3><span class="tag green">목록</span></div><div class="box-body"><div class="checks"><label class="check"><input type="checkbox" checked>GPT-4.1 mini</label><label class="check"><input type="checkbox" checked>Claude Sonnet</label><label class="check"><input type="checkbox">Gemini Pro</label></div></div></div><div class="condition-row"><select class="select"><option>Application 권한</option></select><select class="select"><option>포함</option></select><input class="input" value="승인된 API Key"><button class="remove-btn" type="button">×</button></div><div class="condition-row"><select class="select"><option>Provider 상태</option></select><select class="select"><option>같음</option></select><input class="input" value="정상 또는 Failover 가능"><button class="remove-btn" type="button">×</button></div></div></div></div>
+          <div id="llm-sensitive-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">탐지할 민감정보</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">개인정보</div><div class="checks"><label class="check"><input type="checkbox" checked>주민번호</label><label class="check"><input type="checkbox" checked>전화번호</label><label class="check"><input type="checkbox" checked>이메일</label><label class="check"><input type="checkbox">계좌번호</label><label class="check"><input type="checkbox">카드번호</label></div></div><div class="criteria-row"><div class="criteria-title">기밀정보</div><div class="checks"><label class="check"><input type="checkbox" checked>API Key</label><label class="check"><input type="checkbox" checked>Access Token</label><label class="check"><input type="checkbox" checked>Private Key</label><label class="check"><input type="checkbox">고객 식별자</label></div></div><div class="criteria-row"><div class="criteria-title">검사 방향</div><div class="checks"><label class="check"><input type="checkbox" checked>요청 프롬프트</label><label class="check"><input type="checkbox" checked>응답 본문</label><label class="check"><input type="checkbox" checked>첨부 파일</label></div></div></div></div></div>
+          <div id="llm-cost-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">API 사용량 한도</div><div class="grid-3"><input class="input" value="월 예산 $50,000"><input class="input" value="일 호출 1,000,000건"><input class="input" value="분당 2,000 TPM"></div></div><div class="form-row"><div class="form-label">임계치 조치</div><div class="criteria"><div class="criteria-row"><div class="criteria-title">80%</div><div class="checks"><label class="check"><input type="checkbox" checked>운영자 알림</label><label class="check"><input type="checkbox" checked>대시보드 경고</label></div></div><div class="criteria-row"><div class="criteria-title">90%</div><div class="checks"><label class="check"><input type="checkbox" checked>부서장 승인 요청</label><label class="check"><input type="checkbox">저비용 모델 전환</label></div></div><div class="criteria-row"><div class="criteria-title">100%</div><div class="checks"><label class="check"><input type="checkbox" checked>호출 차단</label><label class="check"><input type="checkbox" checked>예외 신청 허용</label></div></div></div></div></div>
+          <div id="llm-audit-fields" class="dynamic-panel"><div class="form-row"><div class="form-label">감사 로그 저장 범위</div><div class="checks"><label class="check"><input type="checkbox" checked>사용자/조직</label><label class="check"><input type="checkbox" checked>Application</label><label class="check"><input type="checkbox" checked>Provider/모델</label><label class="check"><input type="checkbox" checked>요청 메타데이터</label><label class="check"><input type="checkbox">응답 전문</label></div></div><div class="form-row"><div class="form-label">보존 기간</div><div class="grid-3"><input class="input" value="365일"><select class="select"><option>민감정보 마스킹 저장</option></select><select class="select"><option>감사 관리자만 조회</option></select></div></div></div>`:`
+          <div class="form-row"><div class="form-label">적용 대상</div><div class="grid-3"><select class="select"><option>조직: R&D 본부</option><option>조직: 전사</option></select><select class="select"><option>Application: R&D Code Assistant</option><option>Application: Sales Insight Bot</option></select><select class="select"><option>환경: Dev / Stage</option><option>환경: Prod</option></select></div></div>
+          <div class="form-row"><div class="form-label">연결 규정</div><div class="select-table"><table><tbody><tr><td><strong>Provider 승인 모델 목록</strong><small>승인 모델만 허용</small></td><td><span class="tag blue">AI서비스</span></td><td>승인 요청</td></tr><tr><td><strong>API Key / Token 마스킹</strong><small>Secret 패턴 자동 치환</small></td><td><span class="tag orange">대외비</span></td><td>마스킹</td></tr><tr><td><strong>부서별 LLM API 월 예산</strong><small>예산 90% 알림, 100% 차단</small></td><td><span class="tag blue">비용</span></td><td>한도 관리</td></tr></tbody></table></div></div>
+          <div class="form-row"><div class="form-label">배포 방식</div><div class="grid-3"><div class="choice"><strong>즉시 배포</strong><p>대상 전체 바로 적용</p></div><div class="choice selected"><strong>Canary 배포</strong><p>10% 트래픽부터 적용</p></div><div class="choice"><strong>예약 배포</strong><p>업무 영향 낮은 시간 적용</p></div></div></div>`}
+          <div class="form-row"><div class="form-label">적용 범위</div><input id="form-scope" class="input" value="${currentView==="rules"?"전사 Application":"R&D 본부 / Dev·Stage"}"></div>`;
+        return;
+      }
+      if(currentView==="rules"){
+        document.getElementById("form-dynamic").innerHTML=`
+          <div class="rbi-form">
+            <div class="rbi-section"><div class="rbi-section-bar">기본 정보 <span class="done-badge">완료</span></div><div class="rbi-row"><div class="rbi-label">규정 이름 <span class="required">*</span></div><input id="form-name" class="input" value="RBI-개인정보 검사(정규식,태그)"></div><div class="rbi-row"><div class="rbi-label">설명</div><input id="form-desc" class="input" value="외부 AI 웹 격리 세션에서 전화번호, 주소, 생일 여부를 검사함"></div></div>
+            <div class="rbi-section"><div class="rbi-section-bar">검출 기준 <span class="done-badge">완료</span></div><div class="rbi-row"><div class="rbi-label">데이터 유형 <span class="required">*</span></div><div class="rbi-checks"><label class="rbi-check"><input type="radio" name="data-type" checked> 개인정보</label><label class="rbi-check"><input type="radio" name="data-type"> 대외비</label></div></div><div class="rbi-row"><div class="rbi-label">정규식 패턴 <small>일정한 형식을 가진 개인정보입니다.</small></div><div class="rbi-checks"><label class="rbi-check"><input type="checkbox">전체</label><label class="rbi-check"><input type="checkbox" checked>여권번호</label><label class="rbi-check"><input type="checkbox">계좌번호</label><label class="rbi-check"><input type="checkbox">카드번호</label><label class="rbi-check"><input type="checkbox" checked>이메일</label><label class="rbi-check"><input type="checkbox" checked>핸드폰번호</label><label class="rbi-check"><input type="checkbox" checked>전화번호</label><label class="rbi-check"><input type="checkbox" checked>외국인번호</label><label class="rbi-check"><input type="checkbox" checked>주민번호</label><label class="rbi-check"><input type="checkbox">배터리연구개발정보</label></div></div><div class="rbi-row"><div class="rbi-label">딥러닝 태그 <small>AI가 문맥을 분석해 식별하는 개인정보입니다.</small></div><div class="rbi-checks"><label class="rbi-check"><input type="checkbox">전체</label><label class="rbi-check"><input type="checkbox">나이</label><label class="rbi-check"><input type="checkbox">몸무게</label><label class="rbi-check"><input type="checkbox">키</label><label class="rbi-check"><input type="checkbox">이름</label><label class="rbi-check"><input type="checkbox">상호명</label><label class="rbi-check"><input type="checkbox" checked>생일</label><label class="rbi-check"><input type="checkbox" checked>기본주소[시/도]</label><label class="rbi-check"><input type="checkbox" checked>기본주소[시/군/구]</label><label class="rbi-check"><input type="checkbox" checked>상세주소[건물명/상호명]</label><label class="rbi-check"><input type="checkbox" checked>상세주소[기타상세주소]</label><label class="rbi-check"><input type="checkbox" checked>전화번호</label><label class="rbi-check"><input type="checkbox">우편번호</label><label class="rbi-check"><input type="checkbox">미국 주</label><label class="rbi-check"><input type="checkbox">국가</label></div></div><div class="rbi-row"><div class="rbi-label">선택한 항목 <small>선택된 항목 중 하나라도 검출되면 규정 위반으로 처리됩니다.</small></div><div class="rbi-selected"><div class="rbi-selected-head">개인정보</div><div class="rbi-selected-row"><span class="tag blue">정규식 패턴</span>전화번호</div><div class="rbi-selected-row"><span class="tag blue">정규식 패턴</span>여권번호</div><div class="rbi-selected-row"><span class="tag blue">정규식 패턴</span>외국인번호</div><div class="rbi-selected-row"><span class="tag blue">정규식 패턴</span>이메일</div></div></div></div>
+            <div class="rbi-section"><div class="rbi-section-bar">RBI 세션 통제 <span class="done-badge">완료</span></div><div class="rbi-row"><div class="rbi-label">검사 대상</div><div class="rbi-checks"><label class="rbi-check"><input type="checkbox" checked>프롬프트</label><label class="rbi-check"><input type="checkbox" checked>파일 업로드</label><label class="rbi-check"><input type="checkbox" checked>클립보드 붙여넣기</label><label class="rbi-check"><input type="checkbox" checked>다운로드 파일</label></div></div><div class="rbi-row"><div class="rbi-label">적용 범위</div><input id="form-scope" class="input" value="전사 격리 세션"></div></div>
+          </div>`;
+      }else{
+        document.getElementById("form-dynamic").innerHTML=`
+          <div class="rbi-form">
+            <div class="rbi-section"><div class="rbi-section-bar">적용 규정 <span class="done-badge">완료</span></div><div class="rbi-row"><div class="rbi-label">규정 <span class="required">*</span></div><div><button class="btn" type="button"><span class="plus">+</span> 규정 선택</button><div class="select-table" style="margin-top:10px"><table><thead><tr><th></th><th>규정 이름</th><th>설명</th></tr></thead><tbody><tr><td><input type="checkbox"></td><td><strong>RBI-개인정보 검사(정규식,태그)</strong></td><td>개인식별정보와 전화번호, 주소, 생일 여부를 검사함</td></tr></tbody></table></div></div></div></div>
+            <div class="rbi-section"><div class="rbi-section-bar">적용 대상 <span class="done-badge">완료</span></div><div class="rbi-row"><div class="rbi-label">유형 <span class="required">*</span><small>사용자가 식별되는 환경에서는 사용자 및 부서, 식별할 수 없는 환경에서는 IP 주소를 선택하세요.</small></div><div class="rbi-checks"><label class="rbi-check"><input type="radio" name="data-type" checked>사용자 및 부서</label><label class="rbi-check"><input type="radio" name="data-type">IP 주소</label></div></div><div class="rbi-row"><div class="rbi-label">사용자 및 부서 <small>규정을 적용할 사용자 또는 부서를 선택합니다.</small></div><div><input id="form-scope" class="input" placeholder="사용자 이름 또는 ID를 입력하십시오." value=""><div class="rbi-user-box" style="margin-top:8px"><div class="rbi-user-search">사용자 이름 또는 ID를 입력하십시오.</div><div class="rbi-user-card"><span class="rbi-avatar">RB</span><div><strong>RBI01 (rbi01)</strong><br><span class="muted">사원 / RBI</span></div></div></div></div></div></div>
+            <div class="rbi-section"><div class="rbi-section-bar">후처리</div><div class="rbi-row"><div class="rbi-label">위반 시 조치</div><div class="rbi-checks"><label class="rbi-check"><input type="checkbox" checked>사용자 경고 표시</label><label class="rbi-check"><input type="checkbox" checked>전송 차단</label><label class="rbi-check"><input type="checkbox">예외 신청 허용</label><label class="rbi-check"><input type="checkbox" checked>감사 로그 저장</label></div></div><div class="rbi-row"><div class="rbi-label">경고 메시지</div><input id="form-name" class="rbi-message" value="개인정보는 외부 AI 서비스로 전송할 수 없습니다. (개인식별정보, 전화번호, 주소, 생일)"></div><div class="rbi-row"><div class="rbi-label">RBI 세션 처리</div><div class="rbi-checks"><label class="rbi-check"><input type="checkbox" checked>파일 업로드 차단</label><label class="rbi-check"><input type="checkbox" checked>클립보드 전송 차단</label><label class="rbi-check"><input type="checkbox" checked>다운로드 검사</label></div></div></div>
+          </div>`;
+      }
+    }
+    function render(){
+      const product=products[currentProduct];
+      const screen=currentProduct==="llm"?llmScreens[currentView]:null;
+      const query=document.getElementById("search-input").value.trim().toLowerCase();
+      const type=document.getElementById("type-filter").value;
+      document.getElementById("product-title").textContent=isEditing?`${productLabel()} ${viewLabel()} 추가`:(screen?screen.title:(currentView==="policies"?product.title.replace("규정","정책 관리"):product.title));
+      document.getElementById("product-crumb").textContent=screen?screen.crumb:product.crumb;
+      document.getElementById("product-desc").textContent=screen?screen.desc:product.desc;
+      document.getElementById("list-view").classList.toggle("hidden",isEditing);
+      document.getElementById("edit-view").classList.toggle("active",isEditing);
+      document.getElementById("add-button").style.display=isEditing?"none":"inline-flex";
+      if(isEditing){
+        if(!formInitialized){
+          renderEditForm();
+          formInitialized=true;
+        }
+        return;
+      }
+      formInitialized=false;
+      const metrics=screen?screen.metrics:product.metrics;
+      document.getElementById("metric-rules-label").textContent=screen?"관리 항목":(currentView==="policies"?"활성 정책":"활성 규정");
+      document.getElementById("metric-rules").textContent=metrics[0];
+      document.getElementById("metric-rules-desc").textContent=metrics[1];
+      document.getElementById("metric-coverage").textContent=metrics[2];
+      document.getElementById("metric-coverage-desc").textContent=metrics[3];
+      document.getElementById("metric-review").textContent=metrics[4];
+      document.getElementById("metric-review-desc").textContent=metrics[5];
+      document.getElementById("metric-deploy").textContent=metrics[6];
+      document.getElementById("metric-deploy-desc").textContent=metrics[7];
+      document.getElementById("view-label").textContent=screen?screen.countLabel:(currentView==="policies"?"정책":"규정");
+      document.getElementById("type-filter").style.display=screen?"none":"block";
+      document.getElementById("search-input").placeholder=screen?`${screen.label} 검색`:`${viewLabel()} 이름 입력`;
+      const columns=screen?screen.columns:["규정 이름","데이터 유형","적용 범위","처리 방식","마지막 업데이트 ↓"];
+      document.getElementById("table-head").innerHTML=`<tr>${columns.map(column=>`<th>${column}</th>`).join("")}</tr>`;
+      let rows=screen?screen.rows.filter(row=>row.join(" ").toLowerCase().includes(query)):product.rows.filter(row=>(type==="all"||row[1]===type)&&row[0].toLowerCase().includes(query));
+      if(!screen && currentView==="policies") rows=rows.map(row=>[row[0].replace("규정","정책"),row[1],row[2],row[3],row[4],row[5]]);
+      document.getElementById("row-count").textContent=rows.length+"개";
+      document.getElementById("policy-body").innerHTML=screen?rows.map(row=>`<tr>${row.slice(0,columns.length).map((cell,index)=>index===0?`<td><strong>${cell}</strong></td>`:`<td><span class="${index===columns.length-2?"tag "+tagClass(cell,row[6]):"muted"}">${cell}</span></td>`).join("")}</tr>`).join(""):rows.map(row=>`<tr><td><strong>${row[0]}</strong></td><td><span class="tag ${tagClass(row[1],row[5])}">${row[1]}</span></td><td>${row[2]}</td><td><span class="muted">${row[3]}</span></td><td>${row[4]}</td></tr>`).join("");
+      document.getElementById("empty").style.display=rows.length?"none":"grid";
+    }
+    function selectProduct(productKey, viewKey="rules"){
+      document.querySelectorAll(".product-btn").forEach(item=>item.classList.remove("active"));
+      document.querySelectorAll(".product-section").forEach(item=>item.classList.toggle("open",item.dataset.section===productKey));
+      document.querySelector(`.product-btn[data-product="${productKey}"]`).classList.add("active");
+      currentProduct=productKey;
+      currentView=viewKey;
+      isEditing=false;
+      formInitialized=false;
+      document.querySelectorAll(".product-sub").forEach(item=>item.classList.toggle("active",item.dataset.product===productKey&&item.dataset.view===viewKey));
+      document.getElementById("search-input").value="";
+      document.getElementById("type-filter").value="all";
+      render();
+    }
+    document.querySelectorAll(".product-btn").forEach(button=>button.addEventListener("click",()=>{
+      selectProduct(button.dataset.product,"rules");
+      notify(button.querySelector("strong").textContent+" 규정으로 전환했습니다.");
+    }));
+    document.querySelectorAll(".product-sub").forEach(button=>button.addEventListener("click",()=>{
+      selectProduct(button.dataset.product,button.dataset.view);
+      notify(button.textContent.trim()+" 화면으로 전환했습니다.");
+    }));
+    document.getElementById("search-input").addEventListener("input",render);
+    document.getElementById("type-filter").addEventListener("change",render);
+    document.getElementById("form-dynamic").addEventListener("click",(event)=>{
+      const selector=event.target.closest("[data-panel]");
+      if(!selector) return;
+      const group=selector.classList.contains("type-card")?".type-card":".choice";
+      selector.parentElement.querySelectorAll(group).forEach(item=>item.classList.remove(selector.classList.contains("type-card")?"active":"selected"));
+      selector.classList.add(selector.classList.contains("type-card")?"active":"selected");
+      const form=document.getElementById("form-dynamic");
+      form.querySelectorAll(".dynamic-panel").forEach(panel=>panel.classList.remove("active"));
+      const target=form.querySelector("#"+selector.dataset.panel);
+      if(target) target.classList.add("active");
+    });
+    document.getElementById("add-button").addEventListener("click",()=>{
+      isEditing=true;
+      formInitialized=false;
+      render();
+      notify(`${productLabel()} ${viewLabel()} 추가 화면으로 이동했습니다.`);
+    });
+    document.getElementById("cancel-form").addEventListener("click",()=>{
+      isEditing=false;
+      formInitialized=false;
+      render();
+      notify("목록 화면으로 돌아왔습니다.");
+    });
+    document.getElementById("save-form").addEventListener("click",()=>{
+      const name=document.getElementById("form-name").value.trim();
+      if(!name){
+        notify("이름을 입력해 주세요.");
+        return;
+      }
+      const screen=currentProduct==="llm"?llmScreens[currentView]:null;
+      const selectedType=inferEntryType();
+      const scope=document.getElementById("form-scope").value.trim() || "전사";
+      const actions=[...document.querySelectorAll(".form-row input[type='checkbox']:checked")].map(input=>input.parentElement.textContent.trim());
+      const action=actions.find(item=>["차단","마스킹","경고 후 허용","승인 요청","감사 로그","대체 Provider 전환","업로드 차단","다운로드 검사"].includes(item)) || (currentView==="policies"?"규정 연결":"허용 목록");
+      const now=new Date();
+      const stamp=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+      if(screen){
+        const workflowRows={
+          "api-requests":[name,"OpenAI / GPT-4.1 mini","소스코드, 기술문서","월 850K tokens","접수",stamp,"blue"],
+          approvals:[name,"업무 필요성 검토","$8,000","보안 검토 필요","승인 대기",scope,"orange"],
+          connections:[name,"GPT-4.1 mini","Vault 신규 등록","/v1/chat/completions","테스트 필요",stamp,"orange"],
+          "api-keys":[name,"ak_new_****pending","GPT-4.1 mini","월 $12,000","발급 대기",stamp,"orange"],
+          usage:[name,"0","0","$0","신규","한도 설정","blue"],
+          audit:[stamp,scope,"전체 Provider","감사 조건 신규","보고서 생성 대기","진행 전","blue"],
+          leakage:[stamp,name,"민감정보 탐지 조건","중간","정책 적용 대기",scope,"orange"],
+          ops:[name,"0 rpm","-","-","운영 등록","모니터링 시작","blue"]
+        };
+        screen.rows.unshift(workflowRows[currentView]||[name,scope,"신규","등록","대기",stamp,"blue"]);
+        screen.metrics[0]=String(screen.rows.length);
+      }else{
+        products[currentProduct].rows.unshift([name,selectedType,scope,action,stamp,tagClass(selectedType)]);
+        products[currentProduct].metrics[0]=String(products[currentProduct].rows.length);
+        products[currentProduct].metrics[1]=`${productLabel()} ${viewLabel()} ${products[currentProduct].rows.length}개`;
+        document.querySelector(`.product-btn[data-product="${currentProduct}"] .product-count`).textContent=products[currentProduct].rows.length;
+      }
+      isEditing=false;
+      formInitialized=false;
+      document.getElementById("search-input").value="";
+      document.getElementById("type-filter").value="all";
+      render();
+      notify(`${viewLabel()}이 저장되어 목록에 추가되었습니다.`);
+    });
+    render();
+  </script>
+</body>
+</html>
+
